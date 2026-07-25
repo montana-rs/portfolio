@@ -1,0 +1,109 @@
+---
+const fragments = ['warmly inviting', 'inquisition', 'home', 'flirtatious', 'cracks', 'crevices', 'memory', 'another language'];
+---
+
+<section class="artifact" aria-labelledby="artifact-title">
+  <div class="artifact__intro">
+    <p class="eyebrow">Interactive note</p>
+    <h2 id="artifact-title">Move through the project’s language.</h2>
+    <p>
+      Move a pointer across the field, or focus a word and use the arrow keys. The words remain available as
+      ordinary text when the interaction is unavailable or motion is reduced.
+    </p>
+  </div>
+
+  <div class="artifact__field" data-artifact-field>
+    {fragments.map((fragment, index) => (
+      <button class="artifact__word" type="button" style={`--index: ${index}`} data-artifact-word>
+        {fragment}
+      </button>
+    ))}
+  </div>
+</section>
+
+<script is:inline>
+  const field = document.querySelector('[data-artifact-field]');
+  const words = [...document.querySelectorAll('[data-artifact-word]')];
+
+  if (field && words.length > 0) {
+    const moveWords = (x, y) => {
+      const bounds = field.getBoundingClientRect();
+      const normalizedX = ((x - bounds.left) / bounds.width - 0.5) * 2;
+      const normalizedY = ((y - bounds.top) / bounds.height - 0.5) * 2;
+
+      words.forEach((word, index) => {
+        const spread = 8 + (index % 3) * 5;
+        word.style.setProperty('--shift-x', `${normalizedX * spread}px`);
+        word.style.setProperty('--shift-y', `${normalizedY * spread}px`);
+      });
+    };
+
+    field.addEventListener('pointermove', (event) => moveWords(event.clientX, event.clientY));
+    field.addEventListener('pointerleave', () => {
+      words.forEach((word) => {
+        word.style.setProperty('--shift-x', '0px');
+        word.style.setProperty('--shift-y', '0px');
+      });
+    });
+
+    field.addEventListener('keydown', (event) => {
+      if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      const current = document.activeElement;
+      if (!(current instanceof HTMLElement) || !current.matches('[data-artifact-word]')) return;
+      event.preventDefault();
+      const currentIndex = words.indexOf(current);
+      const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
+      words[(currentIndex + direction + words.length) % words.length]?.focus();
+    });
+  }
+</script>
+
+<style>
+  .artifact {
+    display: grid;
+    gap: 2rem;
+    margin-top: 5rem;
+    border-block: 1px solid currentColor;
+    padding-block: 2rem;
+  }
+
+  .artifact__intro { max-width: 34rem; }
+  .eyebrow { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .artifact h2 { max-width: 12ch; margin-block: 0.5rem 1rem; font-size: clamp(2rem, 6vw, 5rem); line-height: 0.95; }
+  .artifact__field {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-evenly;
+    gap: 1rem 2rem;
+    min-height: 22rem;
+    overflow: hidden;
+    border: 1px solid var(--earthsong-muted);
+    background: var(--earthsong-background);
+    padding: 1.5rem;
+  }
+  .artifact__word {
+    --shift-x: 0px;
+    --shift-y: 0px;
+    transform: translate(var(--shift-x), var(--shift-y)) rotate(calc((var(--index) - 3) * 2deg));
+    border: 0;
+    padding: 0.25rem;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    font-size: clamp(1rem, 3vw, 2.5rem);
+    cursor: pointer;
+    transition: transform 180ms ease;
+  }
+
+  .artifact__word:hover { color: var(--earthsong-green); text-decoration: underline; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .artifact__word { transition: none; transform: rotate(calc((var(--index) - 3) * 2deg)); }
+  }
+
+  @media (max-width: 42rem) {
+    .artifact__field { min-height: 18rem; }
+    .artifact__field { gap: 0.75rem 1rem; padding: 1rem; }
+  }
+</style>

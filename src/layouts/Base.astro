@@ -1,0 +1,94 @@
+---
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/700.css';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Montana's portfolio of work, experiments, and evolving practice." />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/">Portfolio</a>
+      <nav aria-label="Primary navigation">
+        <a href="/work/web-development/">Web development</a>
+        <a href="/work/networking/">Networking</a>
+        <a href="/work/audio/">Audio</a>
+        <a href="/work/fabrication/">Fabrication</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --earthsong-background: #282420;
+    --earthsong-foreground: #e5c6a8;
+    --earthsong-cream: #f6f6ec;
+    --earthsong-muted: #665e54;
+    --earthsong-orange: #ff9168;
+    --earthsong-green: #83ef88;
+    --earthsong-blue: #5ed9ff;
+    color: #171717;
+    color: var(--earthsong-foreground);
+    background: var(--earthsong-background);
+    color-scheme: dark;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  a { color: var(--earthsong-orange); }
+  a:hover { color: var(--earthsong-cream); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--earthsong-green); outline-offset: 4px; }
+  ::selection { color: var(--earthsong-background); background: var(--earthsong-cream); }
+
+  ::view-transition-group(first-known-use-window) {
+    animation-duration: 520ms;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  ::view-transition-old(first-known-use-window) { animation: window-out 360ms ease both; }
+  ::view-transition-new(first-known-use-window) { animation: window-in 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+  @keyframes window-out {
+    to { opacity: 0; transform: scale(0.92); }
+  }
+
+  @keyframes window-in {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(first-known-use-window),
+    ::view-transition-new(first-known-use-window) { animation: none; }
+  }
+
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem clamp(1rem, 4vw, 4rem);
+  }
+
+  .site-header nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+  .site-header a { font-weight: 700; }
+  main { padding: 0 clamp(1rem, 4vw, 4rem) 5rem; }
+</style>

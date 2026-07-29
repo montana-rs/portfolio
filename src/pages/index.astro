@@ -4,13 +4,15 @@ import Base from '../layouts/Base.astro';
 
 <Base title="Portfolio">
   <section class="home-intro" aria-labelledby="home-title">
-    <p class="eyebrow">Portfolio / selected practice</p>
-    <h1 id="home-title">Web systems, interfaces, and experiments built to hold attention.</h1>
-    <p>Client work, independent projects, and technical studies across the browser, connected systems, sound, and physical making.</p>
-    <a class="home-intro__cta" href="/work/web-development/">Explore web development <span aria-hidden="true">→</span></a>
+    <p class="eyebrow">Portfolio / selected work</p>
+    <h1 id="home-title">I build web experiences and systems that are useful, understandable, and worth returning to.</h1>
+    <div class="home-intro__actions" aria-label="Primary actions">
+      <a class="home-intro__cta" href="#featured-work">View work <span aria-hidden="true">→</span></a>
+      <a class="home-intro__cta" href="/contact/">Contact <span aria-hidden="true">→</span></a>
+    </div>
   </section>
 
-  <section class="featured-work" aria-labelledby="featured-title">
+  <section class="featured-work" id="featured-work" aria-labelledby="featured-title">
     <div>
       <p class="eyebrow">Selected work</p>
       <h2 id="featured-title">Clear work. Strange edges.</h2>
@@ -19,12 +21,12 @@ import Base from '../layouts/Base.astro';
       <a href="/work/web-development/first-known-use">
         <span>01 / music identity + web experience</span>
         <strong>First Known Use</strong>
-        <p>A living archive for a Vermont music project: identity, releases, lyrics, images, and digital detours.</p>
+        <p>Websites and digital experiences for people building something with its own character. A living archive for a Vermont music project: identity, releases, lyrics, images, and digital detours.</p>
       </a>
-      <a href="/work/web-development/provenance/">
-        <span>02 / browser research archive</span>
-        <strong>PROVENANCE</strong>
-        <p>Contained experiments in local image processing, living interfaces, visible uncertainty, and remembered conditions.</p>
+      <a href="/work/networking/">
+        <span>02 / security + infrastructure</span>
+        <strong>Security + Systems</strong>
+        <p>Security-minded systems work, infrastructure, and hands-on technical practice for employers and technical teams.</p>
       </a>
     </div>
   </section>

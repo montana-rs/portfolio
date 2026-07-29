@@ -11,17 +11,32 @@ import WebDevelopmentArtifact from '../../../sections/web-development/WebDevelop
 
     <a class="project-window" href="/work/web-development/first-known-use" aria-label="Open First Known Use case study">
       <figure class="project-window__preview" transition:name="first-known-use-window" transition:animate="none">
-        <img
-          src="/assets/first-known-use/fishwallpaper.png"
-          alt="A small black pixel fish and handwritten fish mark on a dark green field."
-          width="1920"
-          height="1080"
-        />
+        <iframe
+          src="https://firstknownuse.com/"
+          title="Live WIP preview of the First Known Use website"
+          loading="lazy"
+          scrolling="no"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
       </figure>
       <span class="project-window__bar">
-        <span>First Known Use</span>
+        <span>First Known Use / WIP</span>
         <span aria-hidden="true">↗</span>
       </span>
+    </a>
+
+    <a class="project-card" href="/work/web-development/proof-sheet">
+      <span class="project-card__index">02 / browser experiment</span>
+      <span class="project-card__title">Proof Sheet</span>
+      <span class="project-card__description">A local image-to-poster pipeline for turning visual evidence into a technical document.</span>
+      <span class="project-card__arrow" aria-hidden="true">↗</span>
+    </a>
+
+    <a class="project-card" href="/work/web-development/proof-sigil">
+      <span class="project-card__index">03 / interface specimen</span>
+      <span class="project-card__title">Input Sigil</span>
+      <span class="project-card__description">A button disassembled into a living field of bits, terminal ritual, and unstable power.</span>
+      <span class="project-card__arrow" aria-hidden="true">↗</span>
     </a>
 
     <WebDevelopmentArtifact />
@@ -36,12 +51,17 @@ import WebDevelopmentArtifact from '../../../sections/web-development/WebDevelop
   .project-window { display: block; max-width: 52rem; margin-top: clamp(3rem, 8vw, 7rem); color: var(--earthsong-foreground); border: 1px solid var(--earthsong-muted); background: var(--earthsong-background); text-decoration: none; }
   .project-window:hover { color: var(--earthsong-foreground); border-color: var(--earthsong-green); }
   .project-window__preview { margin: 0; overflow: hidden; border-bottom: 1px solid var(--earthsong-muted); }
-  .project-window__preview img { display: block; width: 100%; height: auto; transition: transform 280ms ease; }
-  .project-window:hover .project-window__preview img { transform: scale(1.03); }
+  .project-window__preview { aspect-ratio: 16 / 9; }
+  .project-window__preview iframe { display: block; width: 100%; height: 100%; border: 0; background: var(--earthsong-background); }
   .project-window__bar { display: flex; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; font-weight: 700; }
+  .project-card { position: relative; display: grid; gap: 0.75rem; max-width: 52rem; margin-top: 1rem; padding: clamp(1.25rem, 4vw, 2.5rem); color: var(--earthsong-foreground); border: 1px solid var(--earthsong-muted); background: var(--earthsong-background); text-decoration: none; }
+  .project-card:hover { color: var(--earthsong-foreground); border-color: var(--earthsong-green); }
+  .project-card__index { color: var(--earthsong-muted); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .project-card__title { font-size: clamp(2rem, 7vw, 5rem); line-height: 0.9; }
+  .project-card__description { max-width: 34rem; }
+  .project-card__arrow { position: absolute; top: clamp(1.25rem, 4vw, 2.5rem); right: clamp(1.25rem, 4vw, 2.5rem); font-size: 1.5rem; }
 
   @media (prefers-reduced-motion: reduce) {
-    .project-window__preview img { transition: none; }
-    .project-window:hover .project-window__preview img { transform: none; }
+    .project-window__preview iframe { transition: none; }
   }
 </style>

@@ -1,6 +1,4 @@
 ---
-import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/700.css';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -36,6 +34,14 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
+  @font-face { font-family: "Archivo"; src: url('/fonts/grotesk.woff2') format('woff2-variations'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+  @font-face { font-family: "Departure Mono"; src: url('/fonts/mono.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "JetBrains Mono"; src: url('/fonts/micro.woff2') format('woff2-variations'); font-weight: 100 800; font-display: swap; }
+  @font-face { font-family: "Cormorant"; src: url('/fonts/serif.woff2') format('woff2-variations'); font-weight: 300 700; font-display: swap; }
+  @font-face { font-family: "UnifrakturMaguntia"; src: url('/fonts/blackletter.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Monsieur La Doulaise"; src: url('/fonts/script.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "W95FA"; src: url('/fonts/pixel.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+
   :root {
     --earthsong-background: #282420;
     --earthsong-foreground: #e5c6a8;
@@ -44,11 +50,18 @@ const { title } = Astro.props;
     --earthsong-orange: #ff9168;
     --earthsong-green: #83ef88;
     --earthsong-blue: #5ed9ff;
+    --font-grotesk: "Archivo", system-ui, sans-serif;
+    --font-mono: "Departure Mono", "JetBrains Mono", ui-monospace, monospace;
+    --font-micro: "JetBrains Mono", ui-monospace, monospace;
+    --font-serif: "Cormorant", Times, serif;
+    --font-blackletter: "UnifrakturMaguntia", serif;
+    --font-script: "Monsieur La Doulaise", cursive;
+    --font-pixel: "W95FA", "Archivo", system-ui, sans-serif;
     color: #171717;
     color: var(--earthsong-foreground);
     background: var(--earthsong-background);
     color-scheme: dark;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-micro);
     line-height: 1.5;
   }
 

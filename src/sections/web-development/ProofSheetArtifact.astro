@@ -1,0 +1,167 @@
+<section class="proof-tool" data-proof-sheet aria-label="Proof Sheet working artifact">
+  <div class="proof-tool__intro">
+    <p class="eyebrow">Working artifact</p>
+    <p>Drop, paste, or choose an image. <br> The image stays in the browser; <br> OWLv2 model weights download remotely on first use.</p>
+  </div>
+
+  <div class="proof-tool__workspace">
+    <div class="proof-tool__drop" data-proof-drop aria-describedby="proof-hint">
+      <p class="proof-tool__mark">PROVENANCE / 00</p>
+      <p class="proof-tool__drop-title">DROP<br /><em>ANYTHING.</em></p>
+      <p id="proof-hint" class="proof-tool__hint">DROP, PASTE, OR CHOOSE ONE IMAGE<br />IMAGE STAYS IN BROWSER // OWLv2 WEIGHTS DOWNLOAD ON FIRST USE</p>
+      <input data-proof-file type="file" accept="image/*" hidden />
+      <button class="proof-tool__choose" data-proof-choose type="button" aria-label="Choose image">
+        <span class="proof-tool__choose-background" data-proof-background aria-hidden="true"></span>
+        <span class="proof-tool__choose-glyphs" data-proof-glyphs aria-hidden="true"></span>
+        <span class="proof-tool__choose-line"><span class="proof-tool__choose-input"><span data-proof-input aria-hidden="true"></span><span class="proof-tool__input-cursor" data-proof-input-cursor aria-hidden="true"></span></span><span class="proof-tool__choose-tag" aria-hidden="true">00 // LOCAL</span></span>
+      </button>
+    </div>
+
+    <div class="proof-tool__controls">
+      <label for="proof-seed">SEED <input id="proof-seed" data-proof-seed inputmode="numeric" /></label>
+      <button data-proof-recompose type="button" disabled>RECOMPOSE</button>
+      <p data-proof-status aria-live="polite">READY // AWAITING INPUT</p>
+    </div>
+    <div class="proof-tool__result" data-proof-result></div>
+  </div>
+</section>
+
+<script>
+  import { initProofSheet } from './proof-sheet/runtime';
+  initProofSheet();
+</script>
+
+<script>
+  let glyphTimers: number[] = [];
+  const initProofInput = () => {
+    const input = document.querySelector<HTMLElement>('[data-proof-input]');
+    const glyphs = document.querySelector<HTMLElement>('[data-proof-glyphs]');
+    const background = document.querySelector<HTMLElement>('[data-proof-background]');
+    if (!input || !glyphs || !background || input.dataset.ready) return;
+    input.dataset.ready = 'true';
+    const flickerLine = input.closest<HTMLElement>('.proof-tool__choose-line');
+    const flickerButton = input.closest<HTMLElement>('.proof-tool__choose');
+    const flickerDuration = `${(14 + Math.random() * 10).toFixed(2)}s`;
+    const flickerDelay = `${(-Math.random() * 5).toFixed(2)}s`;
+    flickerLine?.style.setProperty('--flicker-duration', flickerDuration);
+    flickerLine?.style.setProperty('--flicker-delay', flickerDelay);
+    flickerButton?.style.setProperty('--flicker-duration', flickerDuration);
+    flickerButton?.style.setProperty('--flicker-delay', flickerDelay);
+    const randomizeBit = (bit: HTMLElement) => {
+      bit.classList.toggle('is-on', Math.random() > .48);
+    };
+    const scheduleBit = (bit: HTMLElement) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const timer = window.setTimeout(() => {
+        randomizeBit(bit);
+        const interval = window.setInterval(() => randomizeBit(bit), 1000);
+        glyphTimers.push(interval);
+      }, Math.random() * 1000);
+      glyphTimers.push(timer);
+    };
+    const generateGlyphs = () => {
+      glyphs.replaceChildren();
+      background.replaceChildren();
+      for (let index = 0; index < 216; index += 1) {
+        const backgroundBit = document.createElement('b');
+        randomizeBit(backgroundBit);
+        background.append(backgroundBit);
+        scheduleBit(backgroundBit);
+      }
+
+      for (let index = 0; index < 108; index += 1) {
+        const bit = document.createElement('b');
+        randomizeBit(bit);
+        bit.style.setProperty('--bit-duration', `${(2.1 + Math.random() * 3.8).toFixed(2)}s`);
+        bit.style.setProperty('--bit-delay', `${(-Math.random() * 5.8).toFixed(2)}s`);
+        glyphs.append(bit);
+        scheduleBit(bit);
+      }
+    };
+    glyphTimers.forEach((timer) => {
+      window.clearTimeout(timer);
+      window.clearInterval(timer);
+    });
+    glyphTimers = [];
+    generateGlyphs();
+    const text = 'INPUT';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      input.textContent = text;
+      return;
+    }
+    let index = 0;
+    window.setTimeout(() => {
+      const typeNext = () => {
+        input.textContent = text.slice(0, index);
+        index += 1;
+        if (index <= text.length) window.setTimeout(typeNext, 100);
+      };
+      typeNext();
+    }, 900);
+  };
+  initProofInput();
+  document.addEventListener('astro:page-load', initProofInput);
+</script>
+
+<style>
+  .proof-tool { margin-top: 5rem; border-top: 1px solid var(--line); padding-top: 1.5rem; font-family: var(--font-micro); }
+  .proof-tool__intro { max-width: 42rem; }
+  .proof-tool__intro h2 { margin: .35rem 0 1rem; font-size: clamp(2rem, 6vw, 4.8rem); line-height: .9; letter-spacing: -.08em; }
+  .proof-tool__intro p:last-child { max-width: 34rem; color: var(--muted); }
+  .proof-tool__workspace { margin-top: 2rem; border: 1px solid var(--line); background: var(--surface); overflow: visible; }
+  .proof-tool__drop { min-height: 25rem; padding: clamp(1.25rem, 5vw, 4rem) 0; display: grid; align-content: center; gap: 1rem; }
+  .proof-tool__drop.is-armed { box-shadow: inset 0 0 0 3px var(--accent); }
+  .proof-tool__drop.is-working { opacity: .7; }
+  .proof-tool__mark, .proof-tool__hint, .proof-tool__controls, .proof-tool__download { font-size: .72rem; letter-spacing: .08em; }
+  .proof-tool__drop-title { margin: 0; font-size: clamp(3rem, 14vw, 9rem); line-height: .78; letter-spacing: -.1em; }
+  .proof-tool__drop-title em { color: var(--accent); font-style: normal; }
+  .proof-tool__hint { color: var(--muted); line-height: 1.6; }
+  .proof-tool button { border: 2px solid currentColor; border-radius: .2rem; background: var(--surface); color: inherit; padding: .75rem 1rem; font: inherit; letter-spacing: .06em; cursor: pointer; width: max-content; box-shadow: 3px 3px 0 currentColor, inset 0 0 0 1px var(--surface); }
+  .proof-tool button:hover, .proof-tool button:focus-visible { background: var(--accent); color: var(--background); transform: translate(1px, 1px); box-shadow: 2px 2px 0 currentColor; }
+  .proof-tool button:active { transform: translate(3px, 3px); box-shadow: none; }
+  .proof-tool button.proof-tool__choose { position: relative; isolation: isolate; display: inline-flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: .2rem; appearance: none; min-width: 13rem; min-height: 6rem; padding: .7rem .8rem .65rem; border: 2px solid var(--earthsong-orange); border-radius: .15rem; background: #080a07; color: #e5c6a8; text-align: left; box-shadow: inset 0 0 0 1px #111, inset 0 0 18px rgba(255, 145, 104, .08), 0 0 0 1px #050605, 0 5px 0 #050605, 0 8px 14px rgba(0, 0, 0, .45); transition: transform 80ms ease, box-shadow 80ms ease, filter 80ms ease; }
+  .proof-tool button.proof-tool__choose::before { content: ''; position: absolute; z-index: -1; inset: .25rem; border: 1px solid rgba(229, 198, 168, .45); pointer-events: none; }
+  .proof-tool button.proof-tool__choose::after { content: ''; position: absolute; z-index: -1; inset: -.3rem; border: 1px solid var(--earthsong-orange); border-radius: .35rem; background: transparent; opacity: .38; filter: blur(7px); box-shadow: 0 0 18px rgba(255, 145, 104, .9), 0 0 42px rgba(255, 145, 104, .52); pointer-events: none; animation: proof-screen-aura var(--flicker-duration, 18s) ease-in-out infinite var(--flicker-delay, 0s); }
+  .proof-tool__choose-background { position: absolute; z-index: 0; inset: .7rem; display: grid; grid-template-columns: repeat(24, 1fr); grid-template-rows: repeat(9, 1fr); gap: 0; opacity: .32; pointer-events: none; }
+  .proof-tool__choose-background :global(b) { display: block; width: auto; height: auto; background: transparent; }
+  .proof-tool__choose-background :global(b.is-on) { background: var(--earthsong-orange); box-shadow: 0 0 3px rgba(255, 145, 104, .8); }
+  .proof-tool__choose-glyphs { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(36, 4px); grid-template-rows: repeat(3, 4px); gap: 1px; min-height: 1.3rem; color: #fff7ea; font-family: var(--font-micro); font-size: 1.15rem; line-height: 1; filter: contrast(1.8); text-shadow: 0 0 8px rgba(255, 247, 234, .95), 0 0 18px rgba(255, 247, 234, .9), 0 0 32px rgba(255, 247, 234, .78), 0 0 50px rgba(255, 247, 234, .58); }
+  .proof-tool__choose-glyphs :global(b) { display: block; width: 4px; height: 4px; background: transparent; }
+  .proof-tool__choose-glyphs :global(b.is-on) { background: currentColor; box-shadow: 0 0 3px currentColor, 0 0 9px currentColor, 0 0 18px rgba(255, 247, 234, .95), 0 0 34px rgba(255, 247, 234, .75); animation: proof-bit-flicker var(--bit-duration, 3.6s) ease-in-out infinite var(--bit-delay, 0s); }
+  .proof-tool__choose-line { position: relative; z-index: 1; display: flex; align-items: baseline; justify-content: space-between; padding-top: .45rem; border-top: 1px solid rgba(255, 145, 104, .45); color: #e5c6a8; font-size: .78rem; letter-spacing: .08em; }
+  .proof-tool__choose-input { display: inline-flex; align-items: baseline; font-weight: 700; text-shadow: 0 0 4px rgba(229, 198, 168, .9), 0 0 10px rgba(229, 198, 168, .72), 0 0 20px rgba(229, 198, 168, .5), 0 0 34px rgba(229, 198, 168, .32); animation: proof-power-flicker var(--flicker-duration, 18s) ease-in-out infinite var(--flicker-delay, 0s); }
+  .proof-tool__choose-tag { color: var(--earthsong-orange); font-size: .52rem; line-height: 1; letter-spacing: .12em; font-weight: 700; text-shadow: 0 0 4px rgba(255, 145, 104, .95), 0 0 10px rgba(255, 145, 104, .78), 0 0 20px rgba(255, 145, 104, .56), 0 0 34px rgba(255, 145, 104, .36); animation: proof-power-flicker var(--flicker-duration, 19s) ease-in-out infinite var(--flicker-delay, -1.7s); }
+  .proof-tool__input-cursor { display: inline-block; width: .55ch; height: .82em; margin-left: .1ch; vertical-align: -.08em; background: currentColor; animation: proof-input-cursor 1s steps(1, end) infinite; }
+  @keyframes proof-input-cursor { 50% { opacity: 0; } }
+  @keyframes proof-bit-flicker {
+    0%, 20%, 24%, 48%, 52%, 76%, 81%, 100% { opacity: 1; filter: brightness(1); }
+    21%, 23%, 49%, 51%, 77%, 80% { opacity: .35; filter: brightness(.65); }
+    22%, 50%, 79% { opacity: 1.08; filter: brightness(1.7); }
+  }
+  @keyframes proof-power-flicker {
+    0%, 16%, 21%, 43%, 48%, 70%, 76%, 100% { opacity: 1; filter: brightness(1); text-shadow: 0 0 4px currentColor, 0 0 10px currentColor, 0 0 20px currentColor, 0 0 34px currentColor; }
+    17%, 20%, 44%, 47%, 71%, 75% { opacity: .72; filter: brightness(.8); text-shadow: 0 0 2px currentColor, 0 0 5px currentColor, 0 0 10px currentColor, 0 0 18px currentColor; }
+    18.5%, 45.5%, 73% { opacity: 1.08; filter: brightness(1.45); text-shadow: 0 0 6px currentColor, 0 0 16px currentColor, 0 0 30px currentColor, 0 0 52px currentColor; }
+  }
+  @keyframes proof-screen-aura {
+    0%, 16%, 21%, 43%, 48%, 70%, 76%, 100% { opacity: .38; filter: blur(7px) brightness(1); }
+    17%, 20%, 44%, 47%, 71%, 75% { opacity: .32; filter: blur(6px) brightness(.94); }
+    18.5%, 45.5%, 73% { opacity: .26; filter: blur(5px) brightness(.88); }
+  }
+  .proof-tool button.proof-tool__choose:hover, .proof-tool button.proof-tool__choose:focus-visible { background-color: #17100c; border-color: #ffd0bb; filter: brightness(1.12); box-shadow: inset 0 0 0 1px #111, inset 0 0 22px rgba(255, 145, 104, .16), 0 0 10px rgba(255, 145, 104, .22), 0 5px 0 #050605, 0 8px 14px rgba(0, 0, 0, .45); }
+  .proof-tool button.proof-tool__choose:active { transform: translateY(5px); filter: brightness(.9); border-color: #a84d32; box-shadow: inset 0 0 0 1px #111, inset 0 0 12px rgba(255, 145, 104, .18), 0 1px 0 #050605, 0 2px 4px rgba(0, 0, 0, .36); }
+  .proof-tool button:disabled { opacity: .4; cursor: not-allowed; }
+  .proof-tool__controls { border-top: 1px solid var(--line); padding: 1rem 0; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+  .proof-tool__controls label { display: flex; align-items: center; gap: .5rem; }
+  .proof-tool__controls input { width: 7rem; border: 1px solid var(--line); background: transparent; color: inherit; padding: .65rem; font: inherit; }
+  .proof-tool__controls p { flex: 1 1 100%; margin: 0; color: var(--muted); }
+  .proof-tool__result { display: grid; justify-items: start; border-top: 1px solid var(--line); padding: 1rem 0 0; }
+  .proof-tool__result:empty { display: none; }
+  .proof-tool__result :global(img) { display: block; width: min(100%, 48rem); max-width: 100%; height: auto; margin: 0 0 1rem; border: 1px solid var(--line); }
+  .proof-tool__result :global(.proof-tool__download) { color: inherit; }
+  @media (prefers-reduced-motion: reduce) {
+    .proof-tool__drop { transition: none; }
+    .proof-tool__input-cursor { animation: none; }
+    .proof-tool__choose::after, .proof-tool__choose-input, .proof-tool__choose-tag, .proof-tool__choose-glyphs :global(b.is-on) { animation: none; }
+  }
+</style>

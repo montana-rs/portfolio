@@ -1,0 +1,69 @@
+:root {
+  color-scheme: dark;
+  --orange: #ff9168;
+  --cream: #e5c6a8;
+  --white: #fff7ea;
+  --black: #080a07;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: #292622;
+  color: var(--cream);
+  font-family: "JetBrains Mono", "Courier New", monospace;
+}
+
+.sigil {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: .2rem;
+  min-width: 13rem;
+  min-height: 6rem;
+  padding: .7rem .8rem .65rem;
+  border: 2px solid var(--orange);
+  border-radius: .15rem;
+  background: var(--black);
+  color: var(--cream);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px #111, inset 0 0 18px rgba(255, 145, 104, .08), 0 0 0 1px #050605, 0 5px 0 #050605, 0 8px 14px rgba(0, 0, 0, .45);
+}
+
+.sigil::before { content: ""; position: absolute; z-index: -1; inset: .25rem; border: 1px solid rgba(229, 198, 168, .45); pointer-events: none; }
+.sigil__background { position: absolute; z-index: 0; inset: .7rem; display: grid; grid-template-columns: repeat(36, 4px); grid-template-rows: repeat(3, 4px); gap: 1px; opacity: .32; pointer-events: none; }
+.sigil__background b { display: block; width: 4px; height: 4px; background: transparent; }
+.sigil__bits b { display: block; background: transparent; }
+.sigil__background b.is-on { background: var(--orange); box-shadow: 0 0 3px rgba(255, 145, 104, .8); }
+.sigil__bits { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(36, 4px); grid-template-rows: repeat(3, 4px); gap: 1px; min-height: 1.3rem; color: var(--white); filter: contrast(1.8); text-shadow: 0 0 8px rgba(255, 247, 234, .95), 0 0 18px rgba(255, 247, 234, .9), 0 0 32px rgba(255, 247, 234, .78), 0 0 50px rgba(255, 247, 234, .58); }
+.sigil__bits b { width: 4px; height: 4px; }
+.sigil__bits b.is-on { background: currentColor; box-shadow: 0 0 3px currentColor, 0 0 9px currentColor, 0 0 18px rgba(255, 247, 234, .95), 0 0 34px rgba(255, 247, 234, .75); animation: bit-flicker var(--bit-duration, 3.6s) ease-in-out infinite var(--bit-delay, 0s); }
+.sigil__line { position: relative; z-index: 1; display: flex; align-items: baseline; justify-content: space-between; padding-top: .45rem; border-top: 1px solid rgba(255, 145, 104, .45); font-size: .78rem; letter-spacing: .08em; }
+.sigil__input { display: inline-flex; align-items: baseline; font-weight: 700; text-shadow: 0 0 4px rgba(229, 198, 168, .9), 0 0 10px rgba(229, 198, 168, .72), 0 0 20px rgba(229, 198, 168, .5), 0 0 34px rgba(229, 198, 168, .32); animation: power-flicker var(--flicker-duration, 8.5s) ease-in-out infinite var(--flicker-delay, 0s); }
+.sigil__local { color: var(--orange); font-size: .52rem; line-height: 1; letter-spacing: .12em; font-weight: 700; text-shadow: 0 0 4px rgba(255, 145, 104, .95), 0 0 10px rgba(255, 145, 104, .78), 0 0 20px rgba(255, 145, 104, .56), 0 0 34px rgba(255, 145, 104, .36); animation: power-flicker var(--flicker-duration, 9.2s) ease-in-out infinite var(--flicker-delay, -1.7s); }
+.sigil__cursor { display: inline-block; width: .55ch; height: .82em; margin-left: .1ch; vertical-align: -.08em; background: currentColor; animation: cursor 1s steps(1, end) infinite; }
+.sigil:hover, .sigil:focus-visible { filter: brightness(1.12); outline: 2px solid var(--cream); outline-offset: 3px; }
+.sigil:active { transform: translateY(5px); }
+
+@keyframes cursor { 50% { opacity: 0; } }
+@keyframes bit-flicker {
+  0%, 20%, 24%, 48%, 52%, 76%, 81%, 100% { opacity: 1; filter: brightness(1); }
+  21%, 23%, 49%, 51%, 77%, 80% { opacity: .35; filter: brightness(.65); }
+  22%, 50%, 79% { opacity: 1.08; filter: brightness(1.7); }
+}
+@keyframes power-flicker {
+  0%, 16%, 21%, 43%, 48%, 70%, 76%, 100% { opacity: 1; filter: brightness(1); text-shadow: 0 0 4px currentColor, 0 0 10px currentColor, 0 0 20px currentColor, 0 0 34px currentColor; }
+  17%, 20%, 44%, 47%, 71%, 75% { opacity: .72; filter: brightness(.8); text-shadow: 0 0 2px currentColor, 0 0 5px currentColor, 0 0 10px currentColor, 0 0 18px currentColor; }
+  18.5%, 45.5%, 73% { opacity: 1.08; filter: brightness(1.45); text-shadow: 0 0 6px currentColor, 0 0 16px currentColor, 0 0 30px currentColor, 0 0 52px currentColor; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigil__input, .sigil__local, .sigil__bits b.is-on, .sigil__cursor { animation: none; }
+}

@@ -23,7 +23,8 @@ import Base from '../../layouts/Base.astro';
 
     <section class="contact-page__channels" aria-labelledby="channels-title">
       <p class="eyebrow">Available channels</p>
-      <h2 id="channels-title" class="contact-page__direct-heading">No form? Direct line.</h2>
+      <h2 id="channels-title" class="contact-page__direct-heading">Get in touch.</h2>
+      <p class="contact-page__direct-line">No form? Direct line.</p>
       <div class="contact-page__list">
         <a href="mailto:mstake4@gmail.com">
           <span>Email</span>
@@ -53,12 +54,13 @@ import Base from '../../layouts/Base.astro';
   h2 { max-width: 15ch; margin-block: .75rem 2rem; font-size: clamp(2rem, 5vw, 4.5rem); line-height: .95; }
   .contact-page__intro { max-width: 43rem; font-size: clamp(1.2rem, 3vw, 2rem); }
   .contact-page__channels { max-width: 70rem; margin-top: clamp(4rem, 9vw, 7rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
-  .contact-page__direct-heading { max-width: none; margin-block: .75rem 1.5rem; font-size: clamp(1.3rem, 2.5vw, 2.1rem); line-height: 1; }
+  .contact-page__direct-heading { max-width: none; margin-block: .75rem .35rem; font-size: clamp(1.3rem, 2.5vw, 2.1rem); line-height: 1; }
+  .contact-page__direct-line { margin: 0 0 1.25rem; color: var(--earthsong-muted); font-size: .72rem; }
   .contact-page__list { border-top: 1px solid currentColor; }
   .contact-page__list a { display: grid; grid-template-columns: minmax(8rem, .35fr) minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 1.25rem 0; color: var(--earthsong-foreground); border-bottom: 1px solid currentColor; text-decoration: none; }
   .contact-page__list a:hover { color: var(--earthsong-cream); }
   .contact-page__list a > span:first-child { color: var(--earthsong-orange); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
-  .contact-page__list strong { font-size: clamp(.95rem, 2vw, 1.5rem); font-weight: 400; }
+  .contact-page__list strong { font-size: clamp(.82rem, 1.5vw, 1.15rem); font-weight: 400; }
   .contact-page__list a > span:last-child { color: var(--earthsong-orange); font-size: 1.4rem; }
   .contact-page__form-section { max-width: 44rem; margin-top: clamp(5rem, 10vw, 8rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
   .contact-page__form { display: grid; gap: 1rem; }

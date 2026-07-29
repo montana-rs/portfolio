@@ -7,7 +7,7 @@ import WebDevelopmentArtifact from '../../../sections/web-development/WebDevelop
   <section class="section-page" aria-labelledby="section-title">
     <p class="eyebrow">Section / web development</p>
     <h1 id="section-title">Web development</h1>
-    <p class="section-page__intro">Websites, interfaces, systems, and experiments that happen to run in a browser.</p>
+    <p class="section-page__intro">Websites, interfaces, and browser-native systems built with design, behavior, and technical context held together.</p>
 
     <a class="project-window" href="/work/web-development/first-known-use" aria-label="Open First Known Use case study">
       <figure class="project-window__preview" transition:name="first-known-use-window" transition:animate="none">
@@ -25,19 +25,22 @@ import WebDevelopmentArtifact from '../../../sections/web-development/WebDevelop
       </span>
     </a>
 
-    <a class="project-card" href="/work/web-development/proof-sheet">
-      <span class="project-card__index">02 / browser experiment</span>
-      <span class="project-card__title">Proof Sheet</span>
-      <span class="project-card__description">A local image-to-poster pipeline for turning visual evidence into a technical document.</span>
+    <a class="project-card" href="/work/web-development/provenance/">
+      <span class="project-card__index">02 / browser research archive</span>
+      <span class="project-card__title">PROVENANCE</span>
+      <span class="project-card__description">A contained archive of browser experiments: local image processing, living interface specimens, remote conditions, and visible uncertainty.</span>
       <span class="project-card__arrow" aria-hidden="true">↗</span>
     </a>
 
-    <a class="project-card" href="/work/web-development/proof-sigil">
-      <span class="project-card__index">03 / interface specimen</span>
-      <span class="project-card__title">Input Sigil</span>
-      <span class="project-card__description">A button disassembled into a living field of bits, terminal ritual, and unstable power.</span>
-      <span class="project-card__arrow" aria-hidden="true">↗</span>
-    </a>
+    <section class="practice" aria-labelledby="practice-title">
+      <p class="eyebrow">Working principles</p>
+      <h2 id="practice-title">Made for use. Built with room to investigate.</h2>
+      <ol>
+        <li><strong>Design and implementation stay together.</strong><span>Visual direction is considered alongside interaction, performance, and the systems required to maintain the work.</span></li>
+        <li><strong>Private inputs remain private where possible.</strong><span>Proof Sheet is one example: the source image stays in the browser while the output remains reproducible.</span></li>
+        <li><strong>Experiments stay contained.</strong><span>Ambitious runtimes belong to their own routes, leaving the surrounding portfolio fast, legible, and durable.</span></li>
+      </ol>
+    </section>
 
     <WebDevelopmentArtifact />
   </section>
@@ -60,6 +63,12 @@ import WebDevelopmentArtifact from '../../../sections/web-development/WebDevelop
   .project-card__title { font-size: clamp(2rem, 7vw, 5rem); line-height: 0.9; }
   .project-card__description { max-width: 34rem; }
   .project-card__arrow { position: absolute; top: clamp(1.25rem, 4vw, 2.5rem); right: clamp(1.25rem, 4vw, 2.5rem); font-size: 1.5rem; }
+  .practice { max-width: 52rem; margin-top: clamp(5rem, 11vw, 9rem); }
+  .practice h2 { max-width: 13ch; margin-block: .75rem 2rem; font-size: clamp(2rem, 5vw, 4rem); line-height: .95; }
+  .practice ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--earthsong-muted); }
+  .practice li { display: grid; gap: .5rem; padding-block: 1.1rem; border-bottom: 1px solid var(--earthsong-muted); }
+  .practice strong { font-weight: 700; }
+  .practice li span { max-width: 42rem; color: var(--earthsong-foreground); }
 
   @media (prefers-reduced-motion: reduce) {
     .project-window__preview iframe { transition: none; }

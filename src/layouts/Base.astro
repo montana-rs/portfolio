@@ -3,9 +3,28 @@ import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
 }
 
-const { title } = Astro.props;
+const defaultDescription = 'Web systems, connected infrastructure, sound, and physical making. Client work, independent projects, and technical studies by Montana Stake.';
+const { title, description = defaultDescription, ogTitle, ogDescription } = Astro.props;
+const normalizedTitle = title.replace(/ — Portfolio$/, '');
+const documentTitle = title === 'Portfolio' ? 'Montana Stake — web systems, networks, and experiments' : `${normalizedTitle} — Montana Stake`;
+const previewTitle = ogTitle ?? documentTitle;
+const previewDescription = ogDescription ?? description;
+const siteUrl = Astro.site ?? new URL('https://montanars.com');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const previewImageUrl = new URL('/og.png', siteUrl);
+const path = Astro.url.pathname;
+const navigation = [
+  { href: '/work/web-development/', label: 'Web development' },
+  { href: '/work/networking/', label: 'Networking' },
+  { href: '/work/audio/', label: 'Audio' },
+  { href: '/work/fabrication/', label: 'Fabrication' },
+  { href: '/contact/', label: 'Contact' },
+];
 ---
 
 <!doctype html>
@@ -13,21 +32,33 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Montana's portfolio of work, experiments, and evolving practice." />
-    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={previewTitle} />
+    <meta property="og:description" content={previewDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Montana Stake" />
+    <meta property="og:image" content={previewImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Montana Stake — web systems, networks, and experiments." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={previewTitle} />
+    <meta name="twitter:description" content={previewDescription} />
+    <meta name="twitter:image" content={previewImageUrl} />
+    <title>{documentTitle}</title>
     <ClientRouter />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
-      <a href="/">Portfolio</a>
+      <a href="/" aria-current={path === '/' ? 'page' : undefined}>Montana Stake</a>
       <nav aria-label="Primary navigation">
-        <a href="/work/web-development/">Web development</a>
-        <a href="/work/networking/">Networking</a>
-        <a href="/work/audio/">Audio</a>
-        <a href="/work/fabrication/">Fabrication</a>
+        {navigation.map((item) => <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>)}
       </nav>
     </header>
-    <main>
+    <main id="main-content">
       <slot />
     </main>
   </body>
@@ -70,6 +101,8 @@ const { title } = Astro.props;
   a { color: var(--earthsong-orange); }
   a:hover { color: var(--earthsong-cream); }
   a:focus-visible, button:focus-visible { outline: 3px solid var(--earthsong-green); outline-offset: 4px; }
+  .skip-link { position: fixed; z-index: 10; top: 1rem; left: 1rem; padding: .6rem .8rem; background: var(--earthsong-cream); color: var(--earthsong-background); transform: translateY(-150%); }
+  .skip-link:focus { transform: translateY(0); }
   ::selection { color: var(--earthsong-background); background: var(--earthsong-cream); }
 
   ::view-transition-group(first-known-use-window) {
@@ -103,5 +136,10 @@ const { title } = Astro.props;
 
   .site-header nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
   .site-header a { font-weight: 700; }
+  .site-header [aria-current="page"] { color: var(--earthsong-cream); text-decoration-color: var(--earthsong-orange); text-decoration-thickness: 2px; text-underline-offset: .35em; }
   main { padding: 0 clamp(1rem, 4vw, 4rem) 5rem; }
+  @media (max-width: 42rem) {
+    .site-header { display: block; }
+    .site-header nav { justify-content: flex-start; margin-top: .75rem; }
+  }
 </style>

@@ -3,18 +3,68 @@ import Base from '../../../layouts/Base.astro';
 ---
 
 <Base title="Networking — Portfolio">
-  <section class="section-page" aria-labelledby="section-title">
-    <p class="eyebrow">Section / networking</p>
-    <h1 id="section-title">Networking</h1>
-    <p>Infrastructure, protocols, security, systems, and the spaces between connected things.</p>
-    <p class="section-page__empty">Projects will live here as they become ready to share.</p>
-  </section>
+  <article class="security-page">
+    <header class="security-page__header">
+      <p class="eyebrow">Section / networking + security</p>
+      <h1>Systems that should know where they are.</h1>
+      <p class="security-page__intro">Infrastructure, protocols, security, and the spaces between connected things. A public map of the systems I build, understand, and am actively developing.</p>
+    </header>
+
+    <section class="security-page__section" aria-labelledby="lab-title">
+      <div>
+        <p class="eyebrow">Personal lab / proven ground</p>
+        <h2 id="lab-title">A small environment for learning how systems fail.</h2>
+      </div>
+      <div class="security-page__copy">
+        <p>The work begins with operating systems, networks, and the discipline of making a system explainable. These are the parts I can discuss from direct configuration and use:</p>
+        <ul>
+          <li>Proxmox virtualization with Windows and Linux guests</li>
+          <li>TrueNAS, ZFS mirrors, snapshots, and layered backup practices</li>
+          <li>Pi-hole network-wide DNS filtering</li>
+          <li>Tailscale mesh networking with a subnet router</li>
+          <li>Network segmentation for an isolated Kali environment</li>
+          <li>Remote service access, documented dependencies, and architecture decision records</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="security-page__section" aria-labelledby="approach-title">
+      <div>
+        <p class="eyebrow">Security / working posture</p>
+        <h2 id="approach-title">Calibrated claims. Reproducible systems.</h2>
+      </div>
+      <div class="security-page__copy">
+        <p>I keep the boundary between implemented experience and developing knowledge visible. Security+ study is in progress; detection engineering, log analysis, and deeper adversarial lab work are being built deliberately rather than presented as finished experience.</p>
+        <p>That same standard shapes the technical work: document the decision, reduce the attack surface, isolate what is experimental, and keep a recovery path when the system behaves differently than expected.</p>
+      </div>
+    </section>
+
+    <section class="security-page__section security-page__section--last" aria-labelledby="fit-title">
+      <div>
+        <p class="eyebrow">Where this connects</p>
+        <h2 id="fit-title">Useful at the boundary between people and systems.</h2>
+      </div>
+      <div class="security-page__copy">
+        <p>My background combines customer-facing operations, data analytics, web development, documentation, and hands-on infrastructure. I am interested in roles where careful communication and technical curiosity matter as much as the tool list.</p>
+        <a class="security-page__cta" href="/contact/">Start a conversation <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </article>
 </Base>
 
 <style>
-  .section-page { max-width: 58rem; padding-top: clamp(4rem, 14vw, 11rem); }
+  .security-page { max-width: 90rem; min-width: 0; margin-inline: auto; padding-top: clamp(3rem, 10vw, 8rem); }
   .eyebrow { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
-  h1 { margin-block: 1rem 2rem; font-size: clamp(3.5rem, 14vw, 11rem); line-height: 0.85; }
-  .section-page > p:not(.eyebrow) { max-width: 38rem; font-size: clamp(1.2rem, 3vw, 2rem); }
-  .section-page__empty { margin-top: 5rem; font-size: 1rem !important; }
+  h1 { max-width: 12ch; margin-block: 1rem 2rem; font-size: clamp(3.5rem, 11vw, 9rem); line-height: .84; letter-spacing: -.07em; }
+  h2 { max-width: 15ch; margin-block: .75rem 1.5rem; font-size: clamp(2rem, 5vw, 4.5rem); line-height: .95; }
+  .security-page__header { max-width: 66rem; }
+  .security-page__intro { max-width: 46rem; font-size: clamp(1.2rem, 3vw, 2rem); }
+  .security-page__section { display: grid; grid-template-columns: minmax(12rem, .8fr) minmax(0, 1fr); gap: clamp(2rem, 8vw, 8rem); align-items: start; margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .security-page__copy { max-width: 42rem; }
+  .security-page__copy p:first-child { margin-top: 0; }
+  .security-page__copy ul { display: grid; gap: .75rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+  .security-page__copy li { padding-top: .75rem; border-top: 1px solid var(--earthsong-muted); }
+  .security-page__section--last { margin-bottom: 3rem; }
+  .security-page__cta { display: inline-block; margin-top: 1rem; font-weight: 700; }
+  @media (max-width: 42rem) { .security-page__section { display: block; } .security-page__copy { margin-top: 2rem; } }
 </style>

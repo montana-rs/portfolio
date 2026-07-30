@@ -53,7 +53,11 @@ const navigation = [
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
       <a href="/" aria-current={path === '/' ? 'page' : undefined}>Montana Stake</a>
-      <nav aria-label="Primary navigation">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="menu-toggle__label">Menu</span>
+        <span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <nav id="primary-navigation" aria-label="Primary navigation">
         {navigation.map((item) => <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>)}
       </nav>
     </header>
@@ -71,6 +75,29 @@ const navigation = [
     </footer>
   </body>
 </html>
+
+<script is:inline>
+  const initNavigation = () => {
+    const header = document.querySelector('.site-header');
+    const toggle = header?.querySelector('.menu-toggle');
+    const navigation = header?.querySelector('#primary-navigation');
+    if (!header || !toggle || !navigation || toggle.dataset.ready) return;
+    toggle.dataset.ready = 'true';
+    const setOpen = (open) => {
+      header.dataset.menuOpen = open ? 'true' : 'false';
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    };
+    setOpen(false);
+    toggle.addEventListener('click', () => setOpen(header.dataset.menuOpen !== 'true'));
+    navigation.addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+  };
+  initNavigation();
+  document.addEventListener('astro:page-load', initNavigation);
+</script>
 
 <style is:global>
   @font-face { font-family: "Archivo"; src: url('/fonts/grotesk.woff2') format('woff2-variations'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
@@ -144,6 +171,7 @@ const navigation = [
 
   .site-header nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
   .site-header a { font-weight: 700; }
+  .menu-toggle { display: none; }
   .site-header [aria-current="page"] { color: var(--earthsong-cream); text-decoration-color: var(--earthsong-orange); text-decoration-thickness: 2px; text-underline-offset: .35em; }
   main { padding: 0 clamp(1rem, 4vw, 4rem) 5rem; }
   .site-footer { display: flex; justify-content: space-between; gap: 1rem 2rem; margin: 4rem clamp(1rem, 4vw, 4rem) 0; padding-block: 1rem; border-top: 1px solid var(--earthsong-muted); color: var(--earthsong-muted); font-size: .78rem; }
@@ -151,9 +179,16 @@ const navigation = [
   .site-footer a { color: var(--earthsong-muted); }
   .site-footer a:hover { color: var(--earthsong-cream); }
   @media (max-width: 42rem) {
-    .site-header { display: block; }
-    .site-header nav { justify-content: flex-start; gap: .35rem .65rem; margin-top: .75rem; }
-    .site-header nav a { font-size: .74rem; letter-spacing: -.02em; }
+    .site-header { display: grid; grid-template-columns: 1fr auto; align-items: start; }
+    .menu-toggle { display: inline-flex; align-items: center; gap: .6rem; justify-self: end; border: 1px solid var(--earthsong-muted); background: transparent; color: var(--earthsong-foreground); padding: .45rem .55rem; font: inherit; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+    .menu-toggle:hover, .menu-toggle:focus-visible { border-color: var(--earthsong-orange); color: var(--earthsong-cream); }
+    .menu-toggle__icon { display: grid; gap: 3px; width: 1rem; }
+    .menu-toggle__icon i { display: block; height: 1px; background: currentColor; transition: transform 180ms ease, opacity 180ms ease; }
+    .site-header[data-menu-open="true"] .menu-toggle__icon i:first-child { transform: translateY(4px) rotate(45deg); }
+    .site-header[data-menu-open="true"] .menu-toggle__icon i:nth-child(2) { opacity: 0; }
+    .site-header[data-menu-open="true"] .menu-toggle__icon i:last-child { transform: translateY(-4px) rotate(-45deg); }
+    .site-header nav { display: none; grid-column: 1 / -1; justify-content: flex-start; gap: .5rem 1rem; margin-top: .9rem; padding-top: .75rem; border-top: 1px solid var(--earthsong-muted); }
+    .site-header[data-menu-open="true"] nav { display: flex; }
     .site-footer { display: block; }
     .site-footer nav { justify-content: flex-start; margin-top: .75rem; }
   }

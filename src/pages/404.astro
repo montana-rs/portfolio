@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found">
+  <article class="not-found" aria-labelledby="not-found-title">
+    <p class="eyebrow">404 / signal lost</p>
+    <h1 id="not-found-title">Nothing here.</h1>
+    <p class="not-found__message">The address resolved to an empty space. The work is still elsewhere.</p>
+    <a class="not-found__link" href="/">Return to Montana Stake <span aria-hidden="true">→</span></a>
+  </article>
+</Base>
+
+<style>
+  .not-found { max-width: 68rem; min-height: min(70vh, 48rem); margin-inline: auto; padding-top: clamp(5rem, 16vw, 12rem); }
+  .eyebrow { margin: 0; color: var(--earthsong-orange); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { max-width: 8ch; margin: 1rem 0 2rem; font-size: clamp(4rem, 13vw, 11rem); line-height: .84; letter-spacing: -.07em; }
+  .not-found__message { max-width: 34rem; font-size: clamp(1.1rem, 2.4vw, 1.7rem); }
+  .not-found__link { display: inline-block; margin-top: 1.5rem; font-size: 1.05rem; }
+</style>

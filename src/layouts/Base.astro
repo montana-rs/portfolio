@@ -54,7 +54,6 @@ const navigation = [
     <header class="site-header">
       <a href="/" aria-current={path === '/' ? 'page' : undefined}>Montana Stake</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
-        <span class="menu-toggle__label">Menu</span>
         <span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i><i></i></span>
       </button>
       <nav id="primary-navigation" aria-label="Primary navigation">
@@ -180,14 +179,14 @@ const navigation = [
   .site-footer a:hover { color: var(--earthsong-cream); }
   @media (max-width: 42rem) {
     .site-header { display: grid; grid-template-columns: 1fr auto; align-items: start; }
-    .menu-toggle { display: inline-flex; align-items: center; gap: .6rem; justify-self: end; border: 1px solid var(--earthsong-muted); background: transparent; color: var(--earthsong-foreground); padding: .45rem .55rem; font: inherit; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; justify-self: end; border: 1px solid var(--earthsong-muted); background: transparent; color: var(--earthsong-foreground); padding: .55rem; cursor: pointer; }
     .menu-toggle:hover, .menu-toggle:focus-visible { border-color: var(--earthsong-orange); color: var(--earthsong-cream); }
     .menu-toggle__icon { display: grid; gap: 3px; width: 1rem; }
     .menu-toggle__icon i { display: block; height: 1px; background: currentColor; transition: transform 180ms ease, opacity 180ms ease; }
     .site-header[data-menu-open="true"] .menu-toggle__icon i:first-child { transform: translateY(4px) rotate(45deg); }
     .site-header[data-menu-open="true"] .menu-toggle__icon i:nth-child(2) { opacity: 0; }
     .site-header[data-menu-open="true"] .menu-toggle__icon i:last-child { transform: translateY(-4px) rotate(-45deg); }
-    .site-header nav { display: none; grid-column: 1 / -1; justify-content: flex-start; gap: .5rem 1rem; margin-top: .9rem; padding-top: .75rem; border-top: 1px solid var(--earthsong-muted); }
+    .site-header nav { display: none; grid-column: 1 / -1; flex-direction: column; align-items: flex-end; gap: .55rem; margin-top: .9rem; padding-top: .75rem; border-top: 1px solid var(--earthsong-muted); text-align: right; }
     .site-header[data-menu-open="true"] nav { display: flex; }
     .site-footer { display: block; }
     .site-footer nav { justify-content: flex-start; margin-top: .75rem; }

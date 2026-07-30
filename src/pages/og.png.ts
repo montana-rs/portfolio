@@ -51,12 +51,12 @@ export const GET: APIRoute = async () => {
       fontSize: 22,
       letterSpacing: 3,
     }, [
-      node({}, '[ PORTFOLIO / 00 ]'),
+      node({}, '[ MONTANA STAKE / 00 ]'),
       node({ width: 54, height: 8, background: orange }),
     ]),
     node({ display: 'flex', flexDirection: 'column', gap: 22 }, [
       node({ fontSize: 112, lineHeight: 1, letterSpacing: -3, color: cream }, 'Montana Stake'),
-      node({ fontFamily: 'JetBrains Mono', fontSize: 27, letterSpacing: 2, color: foreground }, 'WEB SYSTEMS / NETWORKS / EXPERIMENTS'),
+      node({ fontFamily: 'JetBrains Mono', fontSize: 27, letterSpacing: 2, color: foreground }, 'WEB DEVELOPMENT / SECURITY + SYSTEMS'),
     ]),
     node({
       display: 'flex',
@@ -71,7 +71,7 @@ export const GET: APIRoute = async () => {
       letterSpacing: 2,
     }, [
       node({}, 'MONTANARS.COM'),
-      node({}, 'CLIENT WORK / TECHNICAL STUDIES'),
+      node({}, 'SELECTED WORK / PROVENANCE'),
     ]),
   ]);
 

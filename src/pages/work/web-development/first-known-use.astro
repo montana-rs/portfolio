@@ -16,13 +16,14 @@ import Base from '../../../layouts/Base.astro';
     </header>
 
     <figure class="project__image" transition:name="first-known-use-window" transition:animate="none">
-      <img
-        src="/assets/first-known-use/fishwallpaper.png"
-        alt="A small black pixel fish and handwritten fish mark on a dark green field."
-        width="1920"
-        height="1080"
-      />
-      <figcaption>A visual fragment from the First Known Use project.</figcaption>
+      <iframe
+        src="https://firstknownuse.com/"
+        title="Live preview of the First Known Use website"
+        loading="lazy"
+        scrolling="no"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+      <figcaption>Live preview of the First Known Use project.</figcaption>
     </figure>
 
     <div class="project__context">
@@ -114,7 +115,7 @@ import Base from '../../../layouts/Base.astro';
     overflow: hidden;
     border: 1px solid var(--earthsong-muted);
   }
-  .project__image img { display: block; width: 100%; max-width: 100%; height: auto; }
+  .project__image iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; background: var(--earthsong-background); }
   .project__image figcaption { margin-top: 0.75rem; color: var(--earthsong-muted); font-size: 0.85rem; }
   .project__context { max-width: 32rem; margin: 5rem 0 0 auto; }
   a { font-weight: 700; }

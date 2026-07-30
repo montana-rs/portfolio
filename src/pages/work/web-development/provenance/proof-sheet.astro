@@ -76,6 +76,22 @@ import ProofSheetArtifact from '../../../../sections/web-development/ProofSheetA
         </li>
       </ol>
     </section>
+
+    <section class="data-boundary" aria-labelledby="data-boundary-title">
+      <div>
+        <p class="eyebrow">Data boundary</p>
+        <h2 id="data-boundary-title">The image stays close.</h2>
+      </div>
+      <div class="data-boundary__copy">
+        <p>The selected image is read by the browser and is not uploaded by this tool. The image treatment, dither, composition, and final PNG are produced locally.</p>
+        <dl>
+          <div><dt>Remote request</dt><dd>OWLv2 model weights download from the configured Transformers.js model source on first use.</dd></div>
+          <div><dt>Local execution</dt><dd>WebGPU or WASM performs inference in a Web Worker when the browser supports it.</dd></div>
+          <div><dt>Fallback</dt><dd>If the model cannot initialize, the tool returns to deterministic local geometry rather than blocking the composition.</dd></div>
+          <div><dt>Telemetry</dt><dd>The portfolio code does not intentionally send the selected image to an analytics or application server.</dd></div>
+        </dl>
+      </div>
+    </section>
   </article>
 </Base>
 
@@ -148,6 +164,16 @@ import ProofSheetArtifact from '../../../../sections/web-development/ProofSheetA
   .pipeline li + li { padding-left: 1rem; border-left: 1px solid currentColor; }
   .pipeline h3 { margin: 0 0 0.75rem; font-size: 1.2rem; }
   .pipeline p { margin: 0; }
+  .data-boundary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, .7fr); gap: clamp(2rem, 8vw, 8rem); margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .data-boundary > div:first-child { max-width: 42rem; }
+  .data-boundary__copy { max-width: 42rem; }
+  .data-boundary__copy > p { margin-top: 0; }
+  .data-boundary dl { margin: 2rem 0 0; }
+  .data-boundary dl div { padding-block: 1rem; border-top: 1px solid currentColor; }
+  .data-boundary dl div:last-child { border-bottom: 1px solid currentColor; }
+  .data-boundary dt { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; }
+  .data-boundary dd { margin: .35rem 0 0; }
+  @media (max-width: 42rem) { .data-boundary { display: block; } .data-boundary__copy { margin-top: 2rem; } }
   @media (max-width: 42rem) {
     .signal { align-items: flex-start; flex-direction: column; }
     .signal span { transform: rotate(90deg); }

@@ -60,6 +60,15 @@ const navigation = [
     <main id="main-content">
       <slot />
     </main>
+    <footer class="site-footer">
+      <span>Montana Stake / {new Date().getFullYear()}</span>
+      <nav aria-label="Footer navigation">
+        <a href="/work/web-development/">Web development</a>
+        <a href="/work/networking/">Security + Systems</a>
+        <a href="/contact/">Contact</a>
+        <a href="https://github.com/montana-rs" rel="external">GitHub</a>
+      </nav>
+    </footer>
   </body>
 </html>
 
@@ -137,8 +146,14 @@ const navigation = [
   .site-header a { font-weight: 700; }
   .site-header [aria-current="page"] { color: var(--earthsong-cream); text-decoration-color: var(--earthsong-orange); text-decoration-thickness: 2px; text-underline-offset: .35em; }
   main { padding: 0 clamp(1rem, 4vw, 4rem) 5rem; }
+  .site-footer { display: flex; justify-content: space-between; gap: 1rem 2rem; margin: 4rem clamp(1rem, 4vw, 4rem) 0; padding-block: 1rem; border-top: 1px solid var(--earthsong-muted); color: var(--earthsong-muted); font-size: .78rem; }
+  .site-footer nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .4rem 1rem; }
+  .site-footer a { color: var(--earthsong-muted); }
+  .site-footer a:hover { color: var(--earthsong-cream); }
   @media (max-width: 42rem) {
     .site-header { display: block; }
     .site-header nav { justify-content: flex-start; margin-top: .75rem; }
+    .site-footer { display: block; }
+    .site-footer nav { justify-content: flex-start; margin-top: .75rem; }
   }
 </style>

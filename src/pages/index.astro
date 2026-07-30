@@ -30,6 +30,30 @@ import Base from '../layouts/Base.astro';
       </a>
     </div>
   </section>
+
+  <section class="evidence" aria-labelledby="evidence-title">
+    <div>
+      <p class="eyebrow">Proof surfaces</p>
+      <h2 id="evidence-title">Look closer.</h2>
+    </div>
+    <div class="evidence__list">
+      <a href="/work/web-development/first-known-use/">
+        <span>01 / active WIP</span>
+        <strong>First Known Use</strong>
+        <p>Music identity and an Astro-based archive system, currently being brought into its public form.</p>
+      </a>
+      <a href="/work/web-development/provenance/proof-sheet/">
+        <span>02 / browser-local machine</span>
+        <strong>Proof Sheet</strong>
+        <p>Local image processing, Web Worker inference, seeded composition, and a downloadable 2000px artifact.</p>
+      </a>
+      <a href="/work/networking/">
+        <span>03 / systems practice</span>
+        <strong>Security + Systems</strong>
+        <p>A documented home lab, trust boundaries, resilience work, and a security practice still becoming more specific.</p>
+      </a>
+    </div>
+  </section>
 </Base>
 
 <style>
@@ -47,5 +71,12 @@ import Base from '../layouts/Base.astro';
   .featured-work__list span { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
   .featured-work__list strong { color: var(--earthsong-foreground); font-size: clamp(1.8rem, 4vw, 3.5rem); font-weight: 400; line-height: .9; text-decoration: none; }
   .featured-work__list p { max-width: 38rem; margin: 0; }
-  @media (max-width: 42rem) { .featured-work { display: block; } .featured-work__list { margin-top: 2rem; } }
+  .evidence { display: grid; grid-template-columns: minmax(12rem, .7fr) minmax(0, 1.3fr); gap: clamp(2rem, 8vw, 8rem); max-width: 76rem; margin-top: clamp(6rem, 16vw, 14rem); }
+  .evidence__list { border-top: 1px solid currentColor; }
+  .evidence__list a { display: grid; gap: .55rem; padding: 1.1rem 0 1.25rem; color: var(--earthsong-foreground); border-bottom: 1px solid currentColor; text-decoration: none; }
+  .evidence__list a:hover { color: var(--earthsong-cream); }
+  .evidence__list span { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
+  .evidence__list strong { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 400; line-height: .95; }
+  .evidence__list p { max-width: 38rem; margin: 0; }
+  @media (max-width: 42rem) { .featured-work, .evidence { display: block; } .featured-work__list, .evidence__list { margin-top: 2rem; } }
 </style>

@@ -39,6 +39,33 @@ import Base from '../../../layouts/Base.astro';
       </div>
     </section>
 
+    <section class="security-page__section" aria-labelledby="artifacts-title">
+      <div>
+        <p class="eyebrow">Practice artifacts</p>
+        <h2 id="artifacts-title">The evidence is being written down.</h2>
+      </div>
+      <div class="security-page__artifacts">
+        <article>
+          <p class="security-page__artifact-label">01 / implemented</p>
+          <h3>Trust boundaries</h3>
+          <p>Proxmox hosts Windows and Linux guests; TrueNAS provides storage and recovery layers; Pi-hole filters DNS; Tailscale provides identity-based remote access; an isolated Kali environment is kept off the LAN by design.</p>
+          <p class="security-page__artifact-note">The public version intentionally omits addresses, credentials, and topology details that would make the home network easier to target.</p>
+        </article>
+        <article>
+          <p class="security-page__artifact-label">02 / implemented posture</p>
+          <h3>Recovery before confidence</h3>
+          <p>Mirrored storage, snapshots, layered backups, configuration exports, and an offline target turn failure into a recoverable event rather than a story about hoping nothing breaks.</p>
+          <p class="security-page__artifact-note">The next public version will document one restore exercise with timing, assumptions, and what was not recoverable.</p>
+        </article>
+        <article>
+          <p class="security-page__artifact-label">03 / next build</p>
+          <h3>Detection in the loop</h3>
+          <p>The remaining gap is detection evidence: collect sanitized host and network events, generate a controlled signal, and write the triage from alert to conclusion without presenting planned work as shipped capability.</p>
+          <p class="security-page__artifact-note">Wazuh, Windows event logs, and a small ATT&amp;CK-mapped exercise are the intended next lab boundary.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="security-page__section security-page__section--last" aria-labelledby="fit-title">
       <div>
         <p class="eyebrow">Where this connects</p>
@@ -64,6 +91,13 @@ import Base from '../../../layouts/Base.astro';
   .security-page__copy p:first-child { margin-top: 0; }
   .security-page__copy ul { display: grid; gap: .75rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
   .security-page__copy li { padding-top: .75rem; border-top: 1px solid var(--earthsong-muted); }
+  .security-page__artifacts { display: grid; gap: 1rem; max-width: 46rem; }
+  .security-page__artifacts article { padding: 1rem 0 1.25rem; border-top: 1px solid currentColor; }
+  .security-page__artifacts article:last-child { border-bottom: 1px solid currentColor; }
+  .security-page__artifacts h3 { margin: .35rem 0 .75rem; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 400; }
+  .security-page__artifacts p { margin: 0; }
+  .security-page__artifact-label { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
+  .security-page__artifact-note { margin-top: .8rem !important; color: var(--earthsong-muted); font-size: .9rem; }
   .security-page__section--last { margin-bottom: 3rem; }
   .security-page__cta { display: inline-block; margin-top: 1rem; font-weight: 700; }
   @media (max-width: 42rem) { .security-page__section { display: block; } .security-page__copy { margin-top: 2rem; } }

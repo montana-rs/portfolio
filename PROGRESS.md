@@ -130,6 +130,12 @@
 - Thinned the moving core to 1px, delayed receiver pulses by 400ms, and added synchronized fill/glow animation to the shared recovery core and dot.
 - Reordered the SVG paint layers so the muted orbit line traces over the colored core while preserving its halo, and strengthened the shared recovery ball’s direct fill, dot, stroke, and glow pulse.
 - Removed the unexplained filled states from Configure and Decision, advanced the shared recovery pulse slightly, and increased only the blurred signal layers for a brighter glow.
+- Made the systems chart mobile-safe with a contained, keyboard-focusable horizontal viewport, touch scrolling, visible focus treatment, and a reduced mobile canvas width.
+- Replaced the clipped mobile scroll composition with a dedicated vertical tangent-loop SVG: both circles and the single shared recovery node now fit the phone viewport without horizontal scrolling while retaining signal and node animations.
+- Corrected the responsive display rules so desktop and mobile SVG compositions are mutually exclusive; the mobile viewport now renders only the vertical chart.
+- Gave the mobile tangent loops their own signal start point and receiver phases so both mobile lights meet the shared recovery node in sync.
+- Advanced non-recovery receiver pulses by 600ms so node blooms sit in the center of each wake; the shared `RECOVER` timing remains unchanged.
+- Delayed the shared recovery ring, core, and dot by 200ms for a final timing alignment.
 - Creative direction is intentionally open; no palette, typography, layout, or project taxonomy is locked.
 - Portfolio scope includes any kind of project, not only web development.
 - Initial technical direction agreed: Astro 7 as the semantic shell, repository-authored content, and no CMS.

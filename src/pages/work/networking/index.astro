@@ -39,6 +39,89 @@ import Base from '../../../layouts/Base.astro';
       </div>
     </section>
 
+    <section class="security-page__section security-page__section--loops" aria-labelledby="loops-title">
+      <div>
+        <p class="eyebrow">Home lab / operating theory</p>
+        <h2 id="loops-title">Use leaves a trail.</h2>
+      </div>
+      <div class="security-page__copy">
+        <p>A home lab is not a collection of completed diagrams. It is a set of systems that become more understandable through contact with real use, failure, recovery, and revision.</p>
+        <figure class="lab-system-map" aria-labelledby="loops-caption">
+          <p class="lab-system-map__label">01 → 02 / shared recovery interface</p>
+          <svg class="lab-system-map__svg" viewBox="0 0 1000 560" role="img" aria-labelledby="system-map-title system-map-desc">
+            <title id="system-map-title">Systems improve through use and provenance</title>
+            <desc id="system-map-desc">Two circular systems loops touch at one shared recovery node. The left loop describes operational use. The right loop describes provenance.</desc>
+            <defs>
+              <marker id="system-use-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--earthsong-orange)" />
+              </marker>
+              <marker id="system-provenance-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--earthsong-green)" />
+              </marker>
+              <linearGradient id="recover-split" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="var(--earthsong-orange)" />
+                <stop offset="49%" stop-color="var(--earthsong-orange)" />
+                <stop offset="51%" stop-color="var(--earthsong-green)" />
+                <stop offset="100%" stop-color="var(--earthsong-green)" />
+              </linearGradient>
+              <filter id="signal-glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="10" />
+              </filter>
+            </defs>
+            <circle class="lab-system-map__signal lab-system-map__signal--use lab-system-map__signal--field" cx="300" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--provenance lab-system-map__signal--field" cx="700" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--use lab-system-map__signal--trail" cx="300" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--provenance lab-system-map__signal--trail" cx="700" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--use lab-system-map__signal--halo" cx="300" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--provenance lab-system-map__signal--halo" cx="700" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--use lab-system-map__signal--glow" cx="300" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--provenance lab-system-map__signal--glow" cx="700" cy="270" r="200" pathLength="100" filter="url(#signal-glow)" />
+            <circle class="lab-system-map__signal lab-system-map__signal--use lab-system-map__signal--core" cx="300" cy="270" r="200" pathLength="100" />
+            <circle class="lab-system-map__signal lab-system-map__signal--provenance lab-system-map__signal--core" cx="700" cy="270" r="200" pathLength="100" />
+            <circle class="lab-system-map__orbit lab-system-map__orbit--use" cx="300" cy="270" r="200" />
+            <circle class="lab-system-map__orbit lab-system-map__orbit--provenance" cx="700" cy="270" r="200" />
+            <text class="lab-system-map__center lab-system-map__center--large" x="300" y="260" text-anchor="middle">SYSTEMS IMPROVE</text>
+            <text class="lab-system-map__center" x="300" y="290" text-anchor="middle">THROUGH USE</text>
+            <text class="lab-system-map__center lab-system-map__center--large" x="700" y="260" text-anchor="middle">SYSTEMS IMPROVE</text>
+            <text class="lab-system-map__center" x="700" y="290" text-anchor="middle">THROUGH PROVENANCE</text>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -2.6s; --node-glow: var(--earthsong-orange);" transform="translate(362 80)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="0" y="-42" text-anchor="middle">CONFIGURE</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -4.2s; --node-glow: var(--earthsong-orange);" transform="translate(138 152)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="-38" y="6" text-anchor="end">OPERATE</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -5.8s; --node-glow: var(--earthsong-orange);" transform="translate(138 388)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="-38" y="6" text-anchor="end">OBSERVE</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -7.4s; --node-glow: var(--earthsong-orange);" transform="translate(362 460)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="0" y="48" text-anchor="middle">REVISE</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -7.4s; --node-glow: var(--earthsong-green);" transform="translate(638 80)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="0" y="-42" text-anchor="middle">DECISION</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -5.8s; --node-glow: var(--earthsong-green);" transform="translate(862 152)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="38" y="6">CHANGE</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -4.2s; --node-glow: var(--earthsong-green);" transform="translate(862 388)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="38" y="6">EVIDENCE</text>
+            </g>
+            <g class="lab-system-map__node lab-system-map__node--pulse" style="--node-delay: -2.6s; --node-glow: var(--earthsong-green);" transform="translate(638 460)">
+              <circle r="25" /><circle class="lab-system-map__dot" r="5" /><text x="0" y="48" text-anchor="middle">CONTEXT</text>
+            </g>
+            <g class="lab-system-map__shared-node" transform="translate(500 270)">
+              <circle class="lab-system-map__shared-ring" r="38" />
+              <circle class="lab-system-map__shared-core" r="27" />
+              <circle class="lab-system-map__dot" r="5" />
+              <text x="0" y="-52" text-anchor="middle">RECOVER</text>
+              <text class="lab-system-map__shared-id" x="0" y="58" text-anchor="middle">R / SHARED</text>
+            </g>
+          </svg>
+          <figcaption id="loops-caption">Use teaches the system. Provenance explains the change.</figcaption>
+        </figure>
+        <p class="security-page__artifact-note">Exports, decisions, restore notes, and test results keep both loops legible.</p>
+      </div>
+    </section>
+
     <section class="security-page__section" aria-labelledby="artifacts-title">
       <div>
         <p class="eyebrow">Practice artifacts</p>
@@ -98,7 +181,93 @@ import Base from '../../../layouts/Base.astro';
   .security-page__artifacts p { margin: 0; }
   .security-page__artifact-label { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
   .security-page__artifact-note { margin-top: .8rem !important; color: var(--earthsong-muted); font-size: .9rem; }
+  .security-page__section--loops { align-items: start; }
+  .lab-system-map { margin: 2.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--earthsong-muted); }
+  .lab-system-map__label { margin: 0; color: var(--earthsong-orange); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .lab-system-map__svg { display: block; width: 100%; height: auto; margin-top: .75rem; overflow: visible; }
+  .lab-system-map__orbit { fill: none; stroke: var(--earthsong-muted); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .lab-system-map__orbit--use, .lab-system-map__orbit--provenance { stroke: var(--earthsong-muted); stroke-opacity: .8; }
+  .lab-system-map__direction { fill: none; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .lab-system-map__direction--use { stroke: var(--earthsong-orange); }
+  .lab-system-map__direction--provenance { stroke: var(--earthsong-green); }
+  .lab-system-map__signal { fill: none; stroke-linecap: round; animation: lab-signal-travel 8s linear infinite; }
+  .lab-system-map__signal--field { stroke-width: 5; stroke-dasharray: 22 78; opacity: .1; animation-name: lab-signal-travel-field; }
+  .lab-system-map__signal--trail { stroke-width: 4; stroke-dasharray: 16 84; opacity: .2; animation-name: lab-signal-travel-trail; }
+  .lab-system-map__signal--halo { stroke-width: 3; stroke-dasharray: 10 90; opacity: .42; animation-name: lab-signal-travel-halo; }
+  .lab-system-map__signal--glow { stroke-width: 2; stroke-dasharray: 6 94; opacity: .8; animation-name: lab-signal-travel-glow; }
+  .lab-system-map__signal--core { stroke-width: 1; stroke-linecap: butt; stroke-dasharray: 5 95; opacity: .9; }
+  .lab-system-map__signal--use { stroke: var(--earthsong-orange); }
+  .lab-system-map__signal--provenance { stroke: var(--earthsong-green); animation-delay: -4s; }
+  .lab-system-map__center { fill: var(--earthsong-foreground); font-family: var(--font-micro); font-size: 18px; letter-spacing: 2px; }
+  .lab-system-map__center--large { fill: var(--earthsong-cream); font-size: 22px; }
+  .lab-system-map__node circle:first-child { fill: var(--earthsong-background); stroke: var(--earthsong-foreground); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .lab-system-map__dot { fill: var(--earthsong-foreground); }
+  .lab-system-map__node text, .lab-system-map__shared-node text { fill: var(--earthsong-foreground); font-family: var(--font-micro); font-size: 15px; letter-spacing: 1.5px; }
+  .lab-system-map__node--use circle:first-child { fill: var(--earthsong-orange); stroke: var(--earthsong-orange); }
+  .lab-system-map__node--use .lab-system-map__dot { fill: var(--earthsong-background); }
+  .lab-system-map__node--provenance circle:first-child { fill: var(--earthsong-green); stroke: var(--earthsong-green); }
+  .lab-system-map__node--provenance .lab-system-map__dot { fill: var(--earthsong-background); }
+  .lab-system-map__node--pulse circle:first-child, .lab-system-map__node--pulse .lab-system-map__dot { animation: lab-node-light 8s linear infinite; animation-delay: var(--node-delay); }
+  .lab-system-map__shared-ring { fill: var(--earthsong-background); stroke: url(#recover-split); stroke-width: 2; vector-effect: non-scaling-stroke; animation: lab-recovery-pulse 8s ease-in-out -.35s infinite; }
+  .lab-system-map__shared-core { fill: url(#recover-split); stroke: var(--earthsong-cream); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .lab-system-map__shared-node .lab-system-map__dot { fill: var(--earthsong-background); }
+  .lab-system-map__shared-core { animation: lab-recovery-core-pulse 8s ease-in-out -.35s infinite; }
+  .lab-system-map__shared-node .lab-system-map__dot { animation: lab-recovery-dot-pulse 8s ease-in-out -.35s infinite; }
+  .lab-system-map__shared-node text:first-of-type { fill: var(--earthsong-cream); font-size: 17px; }
+  .lab-system-map__shared-id { fill: var(--earthsong-green) !important; font-size: 11px !important; letter-spacing: 1px !important; }
+  @keyframes lab-signal-travel {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -100; }
+  }
+  @keyframes lab-signal-travel-trail {
+    from { stroke-dashoffset: 5; }
+    to { stroke-dashoffset: -95; }
+  }
+  @keyframes lab-signal-travel-halo {
+    from { stroke-dashoffset: 4.5; }
+    to { stroke-dashoffset: -95.5; }
+  }
+  @keyframes lab-signal-travel-glow {
+    from { stroke-dashoffset: 2; }
+    to { stroke-dashoffset: -98; }
+  }
+  @keyframes lab-signal-travel-field {
+    from { stroke-dashoffset: 7; }
+    to { stroke-dashoffset: -93; }
+  }
+  @keyframes lab-node-light {
+    0%, 3%, 14%, 100% { filter: drop-shadow(0 0 0 transparent); opacity: 1; }
+    5%, 10% { filter: drop-shadow(0 0 7px var(--node-glow)); opacity: 1; }
+  }
+  @keyframes lab-recovery-pulse {
+    0%, 5%, 95%, 100% { opacity: 1; }
+    12%, 88% { opacity: .7; }
+  }
+  @keyframes lab-recovery-core-pulse {
+    0%, 7%, 93%, 100% { filter: drop-shadow(0 0 14px var(--earthsong-cream)); stroke-width: 3; opacity: 1; }
+    18%, 82% { filter: drop-shadow(0 0 0 transparent); stroke-width: 1; opacity: .9; }
+  }
+  @keyframes lab-recovery-dot-pulse {
+    0%, 7%, 93%, 100% { fill: var(--earthsong-cream); }
+    18%, 82% { fill: var(--earthsong-background); }
+  }
+  .lab-system-map figcaption { max-width: 42rem; margin-top: 1rem; color: var(--earthsong-muted); font-size: .9rem; }
   .security-page__section--last { margin-bottom: 3rem; }
   .security-page__cta { display: inline-block; margin-top: 1rem; font-weight: 700; }
-  @media (max-width: 42rem) { .security-page__section { display: block; } .security-page__copy { margin-top: 2rem; } }
+  @media (max-width: 42rem) {
+    .security-page__section { display: block; }
+    .security-page__copy { margin-top: 2rem; }
+    .lab-system-map { overflow-x: auto; padding-bottom: .5rem; }
+    .lab-system-map__svg { min-width: 42rem; }
+    .lab-system-map__center { font-size: 16px; letter-spacing: 1px; }
+    .lab-system-map__center--large { font-size: 18px; }
+    .lab-system-map__node text, .lab-system-map__shared-node text { font-size: 13px; letter-spacing: 1px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lab-system-map__orbit { stroke-dasharray: none; }
+    .lab-system-map__signal { animation: none; stroke-dashoffset: 0; }
+    .lab-system-map__node--pulse circle:first-child, .lab-system-map__node--pulse .lab-system-map__dot { animation: none; filter: none; }
+    .lab-system-map__shared-ring { animation: none; opacity: .85; }
+    .lab-system-map__shared-core, .lab-system-map__shared-node .lab-system-map__dot { animation: none; filter: none; }
+  }
 </style>

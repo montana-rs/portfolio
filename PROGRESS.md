@@ -112,6 +112,24 @@
 - Browser reproduction found the actual first failure was `Failed to construct 'URL': Invalid base URL` in the worker WASM path setup. The worker now resolves imported Vite asset URLs against `self.location.origin`; the browser trace then confirmed successful Transformers.js, OWLv2 metadata/model, local `.mjs`, and local `.wasm` requests. WASM uses q8 while WebGPU retains q4f16, and detector errors now identify worker, local runtime, model initialization/download, or inference stages.
 - Chromium fixture benchmark on `proof-sheet-1050026430.png`: the full 20-query WASM q8 run retained detections in 46,387ms (19,406ms model load, 25,443ms inference); the reduced five-query run retained detections in 38,205ms (11,669ms model load, 25,479ms inference). Transformers.js resolves q8 to `onnx/model_quantized.onnx` (not a literal `model_q8.onnx`). The default CPU vocabulary is now five broad queries, inference is downscaled to 512px, and a 90-second timeout exits to labeled geometry fallback. Detection is cached across seed recomposition. A headless SwiftShader WebGPU attempt reached the model stage but failed initialization with runtime code `267935216`; the WASM path remains the verified fallback.
 - Refreshed the generated Open Graph preview card to match the current Montana Stake launch navigation and research archive labels.
+- Added a two-stage home-lab systems diagram to Security + Systems: operational use feeds a provenance loop covering decisions, changes, evidence, context, and recovery.
+- Refined the provenance loop so green is limited to its active decision signal and directional arrow; the orbit and supporting labels use the shared site treatment.
+- Connected both home-lab loops through a shared `RECOVER` state and a labeled provenance handshake, distinguishing system recovery from recovery of the reasoning and evidence around it.
+- Corrected the composite map to use explicit tangent circles with all orbit nodes placed on their geometry; shortened the explanatory copy beneath it.
+- Evened both tangent loops to five equally spaced points, using the single shared `RECOVER` node as the fifth point on each circle.
+- Added CSS/SVG signal lights that travel around both loop edges, glow at the shared recovery interface, and freeze to a static highlight under reduced-motion preferences.
+- Removed the redundant direction arcs between the upper nodes and warmed the traveling signals with a broader, softer SVG bloom.
+- Reduced the traveling signal core to the base orbit weight and moved its visual emphasis into a much larger blurred halo.
+- Extended each traveling signal into offset halo, mid-glow, and core layers so it covers more of the circle with tapered luminous ends.
+- Changed the circles to a muted baseline with a layered moving trail: a long low-opacity wake, mid halo, glow, and thin core now illuminate the circumference and fade as the signal passes.
+- Extended the moving wake to a faint 70% field plus shorter trail layers so the illumination visibly fills more of each circle before decaying back to the muted baseline.
+- Shortened the wake again and synchronized each orbit node as a signal receiver: its ring and center dot briefly bloom in the loop color as the light reaches it, with all node animation disabled for reduced motion.
+- Corrected the green loop receiver phases for its half-cycle signal offset and aligned the shared recovery pulse to the moment both lights cross the tangent node.
+- Shifted receiver pulses into the midpoint of the trailing wake and matched the moving core to the base orbit’s thin, squared line treatment.
+- Tightened the wake again: shorter dash lengths and smaller halo widths preserve the node timing while reducing the signal footprint.
+- Thinned the moving core to 1px, delayed receiver pulses by 400ms, and added synchronized fill/glow animation to the shared recovery core and dot.
+- Reordered the SVG paint layers so the muted orbit line traces over the colored core while preserving its halo, and strengthened the shared recovery ball’s direct fill, dot, stroke, and glow pulse.
+- Removed the unexplained filled states from Configure and Decision, advanced the shared recovery pulse slightly, and increased only the blurred signal layers for a brighter glow.
 - Creative direction is intentionally open; no palette, typography, layout, or project taxonomy is locked.
 - Portfolio scope includes any kind of project, not only web development.
 - Initial technical direction agreed: Astro 7 as the semantic shell, repository-authored content, and no CMS.

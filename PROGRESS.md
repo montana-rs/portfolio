@@ -136,6 +136,7 @@
 - Gave the mobile tangent loops their own signal start point and receiver phases so both mobile lights meet the shared recovery node in sync.
 - Advanced non-recovery receiver pulses by 600ms so node blooms sit in the center of each wake; the shared `RECOVER` timing remains unchanged.
 - Delayed the shared recovery ring, core, and dot by 200ms for a final timing alignment.
+- Production deployment verified through Wrangler Pages direct upload: `a4cc0139` at `a4cc0139.montanars.pages.dev`, built from `a9a0a81`.
 - Creative direction is intentionally open; no palette, typography, layout, or project taxonomy is locked.
 - Portfolio scope includes any kind of project, not only web development.
 - Initial technical direction agreed: Astro 7 as the semantic shell, repository-authored content, and no CMS.

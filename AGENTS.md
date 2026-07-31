@@ -45,6 +45,16 @@ The repository is documentation-only; Astro has not been scaffolded. Do not add 
 
 Until Astro exists, documentation validation replaces the build gate.
 
+## Deployment workflow
+
+Cloudflare Pages is deployed directly from the built output because the `montanars` Pages project is not connected to GitHub. After `npm run build`, deploy production with:
+
+```bash
+npx wrangler pages deploy dist --project-name montanars
+```
+
+Wrangler is a project dev dependency. Verify the returned `pages.dev` deployment URL and Cloudflare deployment status after each upload.
+
 ## Quality and stop conditions
 
 Use semantic HTML, accessible names and alt text, visible focus, responsive composition, and reduced-motion fallbacks. Never modify DNS, production settings, payment configuration, `.env`, or external infrastructure without explicit confirmation. Do not use destructive Git commands.

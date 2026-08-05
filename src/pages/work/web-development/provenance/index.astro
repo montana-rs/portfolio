@@ -29,6 +29,19 @@ import Base from '../../../../layouts/Base.astro';
         <h2 id="specimens-title">Two machines, still becoming themselves.</h2>
       </div>
 
+      <figure class="custody-ribbon" aria-labelledby="custody-caption">
+        <p class="custody-ribbon__label">Archive / chain of custody</p>
+        <div class="custody-ribbon__stage-field" data-custody-field>
+          <ol class="custody-ribbon__stages">
+            <li><span class="custody-ribbon__node" data-custody-node aria-hidden="true"></span><strong>Source</strong><span>what enters</span></li>
+            <li><span class="custody-ribbon__node" data-custody-node aria-hidden="true"></span><strong>Condition</strong><span>what changes it</span></li>
+            <li><span class="custody-ribbon__node" data-custody-node aria-hidden="true"></span><strong>Artifact</strong><span>what remains</span></li>
+          </ol>
+          <span class="custody-ribbon__signal" data-custody-signal aria-hidden="true"><span></span></span>
+        </div>
+        <figcaption id="custody-caption">Each specimen keeps a trace of what it received, what acted on it, and what it returned.</figcaption>
+      </figure>
+
       <a class="specimen-card" href="/work/web-development/provenance/proof-sheet">
         <span class="specimen-card__index">PROVENANCE / 00</span>
         <span class="specimen-card__title">Proof Sheet</span>
@@ -53,6 +66,83 @@ import Base from '../../../../layouts/Base.astro';
   </article>
 </Base>
 
+<script>
+  const initCustodyRibbon = () => {
+    const field = document.querySelector('[data-custody-field]');
+    const signal = document.querySelector('[data-custody-signal]');
+    const nodes = [...document.querySelectorAll('[data-custody-node]')];
+    if (!field || !signal || nodes.length < 2) return;
+
+    const scope = window;
+    scope.__custodyRibbonCleanup?.();
+    const duration = 6500;
+    const restartPause = 900;
+    const cycleDuration = duration + restartPause;
+    const receiverHalfWindow = 0.08;
+    let frameId;
+    let start;
+    let geometry;
+
+    const updateGeometry = () => {
+      const fieldRect = field.getBoundingClientRect();
+      geometry = nodes.map((node) => {
+        const rect = node.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2 - fieldRect.left, y: rect.top + rect.height / 2 - fieldRect.top };
+      });
+      field.style.setProperty('--track-start-x', `${geometry[0].x}px`);
+      field.style.setProperty('--track-start-y', `${geometry[0].y}px`);
+      field.style.setProperty('--track-end-x', `${geometry.at(-1).x}px`);
+      field.style.setProperty('--track-end-y', `${geometry.at(-1).y}px`);
+    };
+
+    const update = (progress, holding = false) => {
+      if (!geometry) return;
+      const first = geometry[0];
+      const last = geometry.at(-1);
+      field.style.setProperty('--signal-x', `${first.x + (last.x - first.x) * progress}px`);
+      field.style.setProperty('--signal-y', `${first.y + (last.y - first.y) * progress}px`);
+      nodes.forEach((node, index) => {
+        const isFirst = index === 0;
+        const isLast = index === nodes.length - 1;
+        const receiverProgress = index / (nodes.length - 1);
+        const isInWindow = isFirst
+          ? progress < receiverHalfWindow * 2 + 0.01
+          : isLast
+            ? progress > 1 - receiverHalfWindow * 2 + 0.02
+            : Math.abs(progress - receiverProgress) < receiverHalfWindow;
+        node.classList.toggle('is-active', !holding && isInWindow);
+      });
+    };
+
+    const tick = (now) => {
+      if (start === undefined) start = now;
+      const elapsed = (now - start) % cycleDuration;
+      update(Math.min(elapsed / duration, 1), elapsed >= duration);
+      frameId = requestAnimationFrame(tick);
+    };
+
+    const resizeObserver = new ResizeObserver(updateGeometry);
+    const cleanup = () => {
+      cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      nodes.forEach((node) => node.classList.remove('is-active'));
+      delete scope.__custodyRibbonCleanup;
+    };
+    scope.__custodyRibbonCleanup = cleanup;
+    resizeObserver.observe(field);
+    updateGeometry();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      update(0);
+      return;
+    }
+    frameId = requestAnimationFrame(tick);
+  };
+
+  document.addEventListener('astro:page-load', initCustodyRibbon);
+  initCustodyRibbon();
+</script>
+
 <style>
   .provenance-index { max-width: 90rem; min-width: 0; margin-inline: auto; padding-top: clamp(3rem, 10vw, 8rem); }
   .provenance-index__header { max-width: 64rem; }
@@ -69,9 +159,36 @@ import Base from '../../../../layouts/Base.astro';
   .specimen-card__index, .specimen-card__meta { color: var(--earthsong-orange); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
   .specimen-card__title { font-size: clamp(2.5rem, 8vw, 6rem); line-height: .85; }
   .specimen-card__description { max-width: 42rem; font-size: clamp(1rem, 2vw, 1.25rem); }
+  .custody-ribbon { max-width: 70rem; margin: 0 0 2rem; padding: 1rem 0 1.5rem; border-block: 1px solid var(--earthsong-muted); }
+  .custody-ribbon__label { margin: 0; color: var(--earthsong-orange); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .custody-ribbon__stage-field { --custody-signal: var(--earthsong-green); position: relative; min-width: 0; margin-top: 1rem; }
+  .custody-ribbon__stage-field::before { content: ''; position: absolute; z-index: 0; top: var(--track-start-y); left: var(--track-start-x); width: calc(var(--track-end-x) - var(--track-start-x)); height: 1px; background: var(--earthsong-muted); }
+  .custody-ribbon__stages { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+  .custody-ribbon__stages li { position: relative; z-index: 2; display: grid; gap: .3rem; }
+  .custody-ribbon__node { position: relative; display: block; width: 1.3rem; height: 1.3rem; border: 1px solid var(--earthsong-foreground); background: var(--earthsong-background); transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease; }
+  .custody-ribbon__node::after { position: absolute; top: 50%; left: 50%; width: .25rem; height: .25rem; content: ''; border-radius: 50%; background: transparent; transform: translate(-50%, -50%) scale(.7); transition: background-color 220ms ease, box-shadow 220ms ease, transform 260ms ease; }
+  .custody-ribbon__node.is-active { border-color: var(--custody-signal); background: color-mix(in srgb, var(--custody-signal) 10%, var(--earthsong-background)); box-shadow: 0 0 6px color-mix(in srgb, var(--custody-signal) 60%, transparent), 0 0 16px color-mix(in srgb, var(--custody-signal) 25%, transparent); }
+  .custody-ribbon__node.is-active::after { background: color-mix(in srgb, var(--custody-signal) 80%, transparent); box-shadow: 0 0 4px color-mix(in srgb, var(--custody-signal) 55%, transparent); transform: translate(-50%, -50%) scale(1.25); }
+  .custody-ribbon__signal { position: absolute; z-index: 1; top: var(--signal-y); left: var(--signal-x); width: 1.4rem; height: 1px; pointer-events: none; transform: translate(-50%, -50%); }
+  .custody-ribbon__signal > span { position: absolute; top: 0; left: 50%; width: 2.4rem; height: 1px; transform: translate(-50%, -50%); background: transparent; }
+  .custody-ribbon__signal > span::before, .custody-ribbon__signal > span::after { position: absolute; inset: 0; content: ''; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--custody-signal) 56%, transparent) 22%, var(--custody-signal) 50%, color-mix(in srgb, var(--custody-signal) 56%, transparent) 78%, transparent); }
+  .custody-ribbon__signal > span::before { filter: blur(1.5px) drop-shadow(0 0 7px var(--custody-signal)) drop-shadow(0 0 16px color-mix(in srgb, var(--custody-signal) 78%, transparent)); }
+  .custody-ribbon__signal > span::after { opacity: .75; filter: blur(8px) drop-shadow(0 0 16px color-mix(in srgb, var(--custody-signal) 62%, transparent)) drop-shadow(0 0 30px color-mix(in srgb, var(--custody-signal) 36%, transparent)); }
+  .custody-ribbon__stages strong { font-size: 1.1rem; font-weight: 400; }
+  .custody-ribbon__stages li > span:last-child { color: var(--earthsong-muted); font-size: .8rem; }
+  .custody-ribbon figcaption { margin-top: 1.25rem; color: var(--earthsong-muted); font-size: .9rem; }
   .specimen-card__arrow { position: absolute; top: clamp(1.5rem, 4vw, 3rem); right: clamp(1.5rem, 4vw, 3rem); color: var(--earthsong-orange); font-size: 1.5rem; }
   .provenance-index__return { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 3rem; max-width: 70rem; margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
   .provenance-index__return p { margin: 0; max-width: 34rem; }
   .provenance-index__return a { font-weight: 700; }
-  @media (max-width: 42rem) { .specimen-card__arrow { position: static; } }
+  @media (max-width: 42rem) {
+    .specimen-card__arrow { position: static; }
+    .custody-ribbon__stages { grid-template-columns: 1fr; gap: 1rem; padding-left: 2rem; }
+    .custody-ribbon__stage-field::before { top: var(--track-start-y); left: var(--track-start-x); width: 1px; height: calc(var(--track-end-y) - var(--track-start-y)); }
+    .custody-ribbon__signal { width: 1px; height: 1.4rem; }
+    .custody-ribbon__signal > span { width: 1px; height: 2.4rem; }
+    .custody-ribbon__signal > span::before, .custody-ribbon__signal > span::after { background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--custody-signal) 56%, transparent) 22%, var(--custody-signal) 50%, color-mix(in srgb, var(--custody-signal) 56%, transparent) 78%, transparent); }
+    .custody-ribbon__node { position: absolute; top: 0; left: -2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .custody-ribbon__signal { opacity: .75; } .custody-ribbon__node, .custody-ribbon__node::after { transition: none; } }
 </style>

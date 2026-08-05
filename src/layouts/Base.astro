@@ -6,17 +6,18 @@ interface Props {
   description?: string;
   ogTitle?: string;
   ogDescription?: string;
+  theme?: string;
 }
 
 const defaultDescription = 'Web systems, connected infrastructure, sound, and physical making. Client work, independent projects, and technical studies by Montana Stake.';
-const { title, description = defaultDescription, ogTitle, ogDescription } = Astro.props;
+const { title, description = defaultDescription, ogTitle, ogDescription, theme } = Astro.props;
 const normalizedTitle = title.replace(/ — Portfolio$/, '');
 const documentTitle = title === 'Portfolio' ? 'Montana Stake — web systems, networks, and experiments' : `${normalizedTitle} — Montana Stake`;
 const previewTitle = ogTitle ?? documentTitle;
 const previewDescription = ogDescription ?? description;
 const siteUrl = Astro.site ?? new URL('https://montanars.com');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
-const previewImageUrl = new URL('/og.png', siteUrl);
+const previewImageUrl = new URL('/og.png?v=2', siteUrl);
 const path = Astro.url.pathname;
 const navigation = [
   { href: '/work/web-development/', label: 'Web development' },
@@ -49,7 +50,7 @@ const navigation = [
     <title>{documentTitle}</title>
     <ClientRouter />
   </head>
-  <body>
+  <body data-page-theme={theme}>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
       <a href="/" aria-current={path === '/' ? 'page' : undefined}>Montana Stake</a>
@@ -191,4 +192,33 @@ const navigation = [
     .site-footer { display: block; }
     .site-footer nav { justify-content: flex-start; margin-top: .75rem; }
   }
+
+  /* Opt-in page theme: flips the shared header/footer to the paper theme for
+     pages (like the First Known Use tour) that carry their own light theme. */
+  body[data-page-theme="fku-light"] .site-header,
+  body[data-page-theme="fku-light"] main,
+  body[data-page-theme="fku-light"] .site-footer {
+    background: #fdfdfb;
+    color: #0a0a0a;
+    border-color: #0a0a0a;
+  }
+  body[data-page-theme="fku-light"] main {
+    /* Contain the tour block's own top/bottom margins so they render
+       against main's paper background instead of collapsing through to
+       body's dark background above/below it. */
+    display: flow-root;
+  }
+  body[data-page-theme="fku-light"] .site-footer {
+    margin: 4rem 0 0;
+    padding-inline: clamp(1rem, 4vw, 4rem);
+  }
+  body[data-page-theme="fku-light"] .site-header a,
+  body[data-page-theme="fku-light"] .site-footer a { color: #0a0a0a; }
+  body[data-page-theme="fku-light"] .site-header a:hover,
+  body[data-page-theme="fku-light"] .site-footer a:hover { color: #ff6a1a; }
+  body[data-page-theme="fku-light"] .site-header [aria-current="page"] { color: #0a0a0a; text-decoration-color: #ff6a1a; }
+  body[data-page-theme="fku-light"] .menu-toggle { border-color: #0a0a0a; color: #0a0a0a; }
+  body[data-page-theme="fku-light"] .menu-toggle:hover,
+  body[data-page-theme="fku-light"] .menu-toggle:focus-visible { border-color: #ff6a1a; color: #0a0a0a; }
+  body[data-page-theme="fku-light"] .site-header nav { border-color: #0a0a0a; }
 </style>

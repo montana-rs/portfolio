@@ -12,6 +12,40 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
+  <section class="practice-relay" aria-labelledby="relay-title">
+    <div class="practice-relay__intro">
+      <p class="eyebrow">Practice / one living thread</p>
+      <h2 id="relay-title">Work becomes clearer through contact.</h2>
+      <p>
+        Making, operating, and documenting are different motions in the same practice. Each one leaves the next
+        with something useful to work from.
+      </p>
+    </div>
+    <div class="practice-relay__stage-field">
+      <span class="practice-relay__signal" data-relay-signal aria-hidden="true"><span></span></span>
+      <ol class="practice-relay__stages" aria-label="Practice sequence">
+        <li>
+        <span class="practice-relay__node" data-relay-node aria-hidden="true"></span>
+        <span class="practice-relay__index">01</span>
+        <strong>Work</strong>
+        <span>make something real</span>
+        </li>
+        <li>
+        <span class="practice-relay__node" data-relay-node aria-hidden="true"></span>
+        <span class="practice-relay__index">02</span>
+        <strong>Systems</strong>
+        <span>see how it behaves</span>
+        </li>
+        <li>
+        <span class="practice-relay__node" data-relay-node aria-hidden="true"></span>
+        <span class="practice-relay__index">03</span>
+        <strong>Provenance</strong>
+        <span>keep the history visible</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <section class="featured-work" id="featured-work" aria-labelledby="featured-title">
     <div>
       <p class="eyebrow">Selected work</p>
@@ -56,12 +90,111 @@ import Base from '../layouts/Base.astro';
   </section>
 </Base>
 
+<script>
+  const initPracticeRelay = () => {
+    const relayWindow = window as typeof window & { __practiceRelayCleanup?: () => void };
+    relayWindow.__practiceRelayCleanup?.();
+    relayWindow.__practiceRelayCleanup = undefined;
+
+    const stages = document.querySelector<HTMLElement>('.practice-relay__stage-field');
+    const nodes = [...document.querySelectorAll<HTMLElement>('[data-relay-node]')];
+    if (!stages || nodes.length < 2) return;
+
+    const duration = 6000;
+    const restartPause = 900;
+    const cycleDuration = duration + restartPause;
+    const receiverHalfWindow = .075;
+    const receiverProgress = nodes.map((_, index) => index / (nodes.length - 1));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let frame = 0;
+    let start = performance.now();
+
+    const updateGeometry = () => {
+      const stagesRect = stages.getBoundingClientRect();
+      const centers = nodes.map((node) => {
+        const rect = node.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2 - stagesRect.left, y: rect.top + rect.height / 2 - stagesRect.top };
+      });
+      stages.style.setProperty('--track-start-x', `${centers[0].x}px`);
+      stages.style.setProperty('--track-end-x', `${centers.at(-1)?.x ?? centers[0].x}px`);
+      stages.style.setProperty('--track-y', `${centers[0].y}px`);
+      stages.style.setProperty('--track-start-y', `${centers[0].y}px`);
+      stages.style.setProperty('--track-end-y', `${centers.at(-1)?.y ?? centers[0].y}px`);
+    };
+
+    const update = (progress: number, holding = false) => {
+      const firstX = Number.parseFloat(stages.style.getPropertyValue('--track-start-x')) || 0;
+      const lastX = Number.parseFloat(stages.style.getPropertyValue('--track-end-x')) || firstX;
+      const firstY = Number.parseFloat(stages.style.getPropertyValue('--track-start-y')) || 0;
+      const lastY = Number.parseFloat(stages.style.getPropertyValue('--track-end-y')) || firstY;
+      stages.style.setProperty('--signal-x', `${firstX + (lastX - firstX) * progress}px`);
+      stages.style.setProperty('--signal-y', `${firstY + (lastY - firstY) * progress}px`);
+      nodes.forEach((node, index) => {
+        const isFirst = index === 0;
+        const isLast = index === nodes.length - 1;
+        const isInWindow = isFirst
+          ? progress < receiverHalfWindow * 2
+          : isLast
+            ? progress > 1 - receiverHalfWindow * 2 + .01
+            : Math.abs(progress - receiverProgress[index]) < receiverHalfWindow;
+        node.classList.toggle('is-active', !holding && isInWindow);
+      });
+    };
+
+    updateGeometry();
+    update(0);
+
+    if (!reducedMotion) {
+      start = performance.now();
+      const tick = (now: number) => {
+        const cycleElapsed = (now - start) % cycleDuration;
+        update(Math.min(cycleElapsed / duration, 1), cycleElapsed >= duration);
+        frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateGeometry();
+      if (reducedMotion) update(0);
+    });
+    resizeObserver.observe(stages);
+    const cleanup = () => {
+      cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
+    };
+    relayWindow.__practiceRelayCleanup = cleanup;
+  };
+
+  initPracticeRelay();
+  document.addEventListener('astro:page-load', initPracticeRelay);
+</script>
+
 <style>
   .home-intro { max-width: 66rem; padding-top: clamp(4rem, 15vw, 12rem); }
   .eyebrow { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
   h1 { max-width: 16ch; margin-block: 1rem 2rem; font-size: clamp(3rem, 6vw, 6rem); line-height: .88; letter-spacing: -.06em; }
   .home-intro__actions { display: grid; gap: .7rem; width: max-content; }
   .home-intro__cta { display: inline-block; font-weight: 700; }
+  .practice-relay { display: grid; grid-template-columns: minmax(14rem, .7fr) minmax(0, 1.3fr); gap: clamp(2rem, 8vw, 8rem); max-width: 76rem; margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .practice-relay__intro { max-width: 30rem; }
+  .practice-relay h2 { max-width: 12ch; margin: .75rem 0 1rem; font-size: clamp(2rem, 5vw, 4rem); line-height: .95; }
+  .practice-relay__intro > p:last-child { max-width: 29rem; margin: 0; }
+  .practice-relay__stage-field { position: relative; align-self: start; min-width: 0; }
+  .practice-relay__stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0; padding: 1rem 0 0; list-style: none; }
+  .practice-relay__stage-field::before { content: ''; position: absolute; z-index: 1; top: var(--track-y, 2.1rem); left: var(--track-start-x, 16.6667%); width: calc(var(--track-end-x, 83.3333%) - var(--track-start-x, 16.6667%)); height: 1px; background: var(--earthsong-muted); }
+  .practice-relay__signal { position: absolute; z-index: 0; top: var(--signal-y, 2.1rem); left: var(--signal-x, 16.6667%); display: block; width: 1.4rem; height: 1px; transform: translate(-50%, -50%); pointer-events: none; }
+  .practice-relay__signal > span { position: absolute; top: 50%; left: 50%; display: block; width: 2.4rem; height: 1px; background: transparent; transform: translate(-50%, -50%); }
+  .practice-relay__signal > span::before, .practice-relay__signal > span::after { content: ''; position: absolute; top: 50%; left: 50%; display: block; width: 100%; height: 1px; transform: translate(-50%, -50%); background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--earthsong-orange) 55%, transparent) 18%, var(--earthsong-orange) 50%, color-mix(in srgb, var(--earthsong-orange) 55%, transparent) 82%, transparent 100%); pointer-events: none; }
+  .practice-relay__signal > span::before { filter: blur(1.5px) drop-shadow(0 0 8px var(--earthsong-orange)) drop-shadow(0 0 18px color-mix(in srgb, var(--earthsong-orange) 92%, transparent)); opacity: 1; }
+  .practice-relay__signal > span::after { filter: blur(8px) drop-shadow(0 0 18px color-mix(in srgb, var(--earthsong-orange) 76%, transparent)) drop-shadow(0 0 34px color-mix(in srgb, var(--earthsong-orange) 48%, transparent)); opacity: 1; }
+  .practice-relay__stages li { position: relative; z-index: 2; display: grid; align-content: start; gap: .4rem; min-width: 0; }
+  .practice-relay__node { display: block; justify-self: center; width: 1.8rem; height: 1.8rem; margin-bottom: .35rem; border: 1px solid var(--earthsong-foreground); border-radius: 50%; background: var(--earthsong-background); box-shadow: inset 0 0 0 5px var(--earthsong-background); transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease; }
+  .practice-relay__node.is-active { border-color: var(--earthsong-orange); background: var(--earthsong-background); box-shadow: inset 0 0 0 5px var(--earthsong-background), 0 0 8px color-mix(in srgb, var(--earthsong-orange) 65%, transparent), 0 0 18px color-mix(in srgb, var(--earthsong-orange) 35%, transparent); }
+  .practice-relay__index { color: var(--earthsong-orange); font-size: .7rem; letter-spacing: .1em; }
+  .practice-relay__stages strong { font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 400; line-height: .95; }
+  .practice-relay__stages li > span:last-child { max-width: 10rem; color: var(--earthsong-muted); font-size: .82rem; }
+  @media (prefers-reduced-motion: reduce) { .practice-relay__node { transition: none; } .practice-relay__signal > span::before, .practice-relay__signal > span::after { animation: none; } }
   .featured-work { display: grid; grid-template-columns: minmax(12rem, .7fr) minmax(0, 1.3fr); gap: clamp(2rem, 8vw, 8rem); max-width: 76rem; margin-top: clamp(6rem, 16vw, 14rem); }
   h2 { max-width: 10ch; margin: .75rem 0 0; font-size: clamp(2rem, 5vw, 4rem); line-height: .95; }
   .featured-work__list { border-top: 1px solid currentColor; }
@@ -78,5 +211,17 @@ import Base from '../layouts/Base.astro';
   .evidence__list span { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
   .evidence__list strong { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 400; line-height: .95; }
   .evidence__list p { max-width: 38rem; margin: 0; }
-  @media (max-width: 42rem) { .featured-work, .evidence { display: block; } .featured-work__list, .evidence__list { margin-top: 2rem; } }
+  @media (max-width: 42rem) {
+    .practice-relay { display: block; }
+    .practice-relay__stage-field { margin-top: 2rem; }
+    .practice-relay__stages { grid-template-columns: 1fr; gap: 1.25rem; padding: 0; }
+    .practice-relay__stage-field::before { top: var(--track-start-y, .9rem); left: var(--track-start-x, .9rem); width: 1px; height: calc(var(--track-end-y, 100%) - var(--track-start-y, .9rem)); }
+    .practice-relay__signal { width: 1px; height: 1.4rem; }
+    .practice-relay__signal > span { width: 1px; height: 2.4rem; }
+    .practice-relay__signal > span::before, .practice-relay__signal > span::after { width: 1px; height: 100%; background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--earthsong-orange) 18%, transparent) 18%, color-mix(in srgb, var(--earthsong-orange) 78%, transparent) 50%, color-mix(in srgb, var(--earthsong-orange) 18%, transparent) 82%, transparent 100%); }
+    .practice-relay__node { position: absolute; top: 0; left: 0; width: 1.8rem; height: 1.8rem; justify-self: auto; }
+    .practice-relay__stages li { min-height: 4.5rem; padding-left: 2.75rem; }
+    .featured-work, .evidence { display: block; }
+    .featured-work__list, .evidence__list { margin-top: 2rem; }
+  }
 </style>

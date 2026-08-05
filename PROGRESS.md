@@ -1,5 +1,104 @@
 # Progress — Portfolio
 
+## Graphics development plan — approved 2026-07-31
+
+The next visual development pass will add eight related but distinct graphic treatments, in this order:
+
+1. Homepage — Practice relay (`WORK → SYSTEMS → PROVENANCE`)
+2. Security + Systems — Trust-boundary topology
+3. Web Development — Render pipeline (`DESIGN → IMPLEMENT → TEST → CONTAIN`)
+4. Proof Sheet — Local/remote data-boundary plate
+5. PROVENANCE index — Chain-of-custody ribbon
+6. PROVENANCE index — Specimen status marks
+7. First Known Use — Archive layer map
+8. 404 — Broken route trace
+
+Each treatment is an independent, reversible slice. As the slices are built, record the reusable rules for their graphic family—geometry, line weight, node anatomy, signal behavior, color semantics, responsive composition, accessibility, and reduced-motion behavior—before reusing that family elsewhere. The initial shared assumption is a small inline SVG or semantic HTML/CSS system with no new dependency; a heavier runtime needs separate justification.
+
+### Deferred docket
+
+After the Security + Systems visualizations are finished and reviewed, return to PROVENANCE for two more abstract treatments:
+
+- **Forked History:** one source branching into divergent artifact histories, with completed, unresolved, and abandoned paths.
+- **Negative-Space Archive:** missing evidence represented as quiet gaps that resolve only as provenance becomes available.
+
+Keep the current custody ribbon as the interim Provenance visualization until that review point.
+
+The first slice is the homepage Practice relay. It should remain a quiet explanatory instrument: one signal, three labeled stages, responsive reflow, keyboard-safe surrounding content, an accessible text equivalent, and a static reduced-motion state.
+
+### Graphics refinement pass — active
+
+The first-pass graphics are implemented and are now being refined one at a time from visual review. Homepage Practice relay refinement is complete for this pass; its receiver timing now runs in explicit `Work → Systems → Provenance` order, and its separate transparent carrier/point-glow geometry follows the original home-lab paint-order principle so the rail hides the moving line. Halo variable 01 was rejected as a visible line; variables 02/03/04 are the accepted current halo stack. The Web Development render pipeline is now on the same measured signal controller, with circular receiver rings restored, transparent resting centers, expanding inner blue orbs, endpoint timing tuned independently, a finite directional sequence, Earthsong blue active state, and responsive horizontal-to-vertical reflow. The Provenance custody ribbon is now on the same controller with archival rectangular receivers, a green evidence signal, a readable endpoint hold, and vertical mobile reflow. The Security + Systems topology now describes identity-based access into a private boundary, with services and storage as destinations and DNS filtering plus isolated testing as controlled branches. The home-lab loops now use one shared circular-progress clock, centered glow layers, synchronized receiver dots, a shared Recover checkpoint, and a static reduced-motion state. The Proof Sheet boundary plate now separates a synchronized orange local pipeline from a subordinate green remote model-weight tether into the Worker, with hidden cores, centered halo/bloom layers, and synchronized receiver dots. The First Known Use archive-layer graphic was the previously omitted screenshot.
+
+### Practice relay / pipeline-family rules established
+
+- Use a semantic ordered list as the source of truth; the line and moving signal are explanatory layers, not the content itself.
+- Keep the rail at one pixel and make the active signal narrow; glow carries atmosphere without increasing the apparent line weight.
+- Use one warm active signal and neutral receivers. A stage should not appear active merely because it is present.
+- Use compact indices and short plain-language descriptors so the graphic remains legible as editorial content.
+- Reflow the pipeline vertically on narrow screens rather than scaling a wide composition into a clipped viewport.
+- The signal pauses as a static accent under `prefers-reduced-motion: reduce`; the sequence remains fully readable without animation.
+
+### Trust-boundary topology / topology-family rules established
+
+- Show conceptual roles and trust zones, never private addresses, hostnames, credentials, or targetable topology.
+- Distinguish the identity/access entry point, private destinations, and control or isolation branches; do not imply that every node is one serial request path.
+- Use a quiet dashed enclosure for a boundary and solid or dashed routes to distinguish primary flow from side branches.
+- Reserve the active color for access or an observed signal; keep passive nodes neutral and isolate special branches with green.
+- Use a single directional signal on the primary route. Branches explain structure but do not compete with the signal.
+- Pair the map with plain-language surrounding text and a caption that states the abstraction boundary.
+- Keep topology graphics as inline SVG with a real title and description, and freeze the signal under reduced motion.
+- Layer the primary route signal into a quiet field, a soft halo, and a one-pixel carrier; keep branch routes passive.
+- Light only the receivers on the directional route, in order, so access is legible without exposing operational detail.
+- Drive the route layers and receiver states from one normalized progress clock; never assign independent negative animation delays to sequential nodes.
+- Use the route's measured segment lengths for receiver progress, then derive branch-carrier progress from the junction where each branch leaves the primary route.
+- Branch carriers use the green semantic accent and expand only the inner receiver dot on arrival; branch routes remain quiet until their primary route junction is reached.
+- Paint the muted route after the signal layers so the one-pixel carrier disappears into the rail while the halo and bloom remain visible; omit the broadest field layer and hide the core when either reads as a second line.
+- Treat the subnet-router pause as a conceptual audit checkpoint, not literal packet timing; label that distinction in the accessible caption.
+
+### Shared recovery loops / loop-family rules established
+
+- Use one circular progress clock for both operational-use and provenance loops.
+- Keep the shared `Recover` object as the single checkpoint between the loops.
+- Center each SVG glow layer using its own dash length; do not offset every layer by the same amount.
+- Keep the broadest field layer out when it reads as a second rail; let trail, halo, and bloom carry the motion.
+- Hide the one-pixel core and use a thin, centered trail/halo/bloom stack so glow, not line weight, communicates movement.
+- Drive receiver dots and the shared recovery state from progress, with Recover lighting only as the carriers cross and a quiet static state under reduced motion.
+
+### Render pipeline / pipeline-family rules established
+
+- Use a semantic ordered sequence as the source of truth; the rail is a visual index of the stages.
+- Use compact rectangular receivers instead of circular loop nodes so sequence graphics remain distinct from operational loops.
+- Keep the pipeline directional and finite. It should not imply that every project returns to the beginning automatically.
+- Use one active signal and choose its color by meaning; this pipeline uses Earthsong blue for an active browser/render state while passive stages stay neutral.
+- Reflow to a vertical rail on mobile with the same stage order and no clipped horizontal canvas.
+- Measure receiver centers after layout and move the signal between the first and last receiver; do not animate against guessed container edges.
+- Derive receiver lighting from the same normalized progress value as the signal so the signal and node state cannot drift apart.
+- Keep the green signal quiet and narrow: the rail stays structural while the halo and bloom carry the sense of motion.
+
+### Boundary plate / boundary-family rules established
+
+- Draw the local boundary as a quiet enclosure and show only the dependency that actually crosses it.
+- Make the data path directional and explicit; the remote path must never visually suggest that private input leaves the local boundary.
+- Use the caption and surrounding prose to state the privacy model in plain language; the graphic is reinforcement, not the sole explanation.
+- Keep the remote dependency visually subordinate to the local pipeline, with a distinct dashed route and green receiver.
+- Preserve a static path under reduced motion and retain the full text explanation beside the plate.
+
+### Archive ribbon and specimen marks / archive-family rules established
+
+- Use a finite three-stage ribbon—source, condition, artifact—to describe an experiment without implying a universal workflow.
+- Keep the archive ribbon quieter than the specimen content; it should orient the reader, not become a second hero graphic.
+- Use small status marks as descriptive metadata, not product-style badges or claims of completeness.
+- Keep status words concrete and pair them with an accessible sentence so color and position never carry meaning alone.
+- Allow the ribbon to become a vertical trace on mobile while preserving stage order and readable labels.
+
+### Archive layers and broken route / trace-family rules established
+
+- Use offset layers for archival material and let a single registration line suggest connection across them.
+- Keep archive graphics materially specific to their project; they should not inherit the systems topology vocabulary.
+- For recovery/error surfaces, show the missing connection as a designed gap rather than inventing a false destination.
+- Keep the recovery action as ordinary semantic content beside the trace, with the graphic never becoming the only route home.
+
 ## Status
 
 - First vertical slice implemented: minimal Astro 7 shell, First Known Use project route, and isolated native-JS word-field artifact.
@@ -146,11 +245,8 @@
 
 ## Next
 
-- Repeat the browser smoke test with a representative image after the WASM CPU inference completes; the route now reaches OWLv2 and all observed model/runtime requests succeed, but a headless WASM run had not yet returned detections within the test window.
-
-- Review the First Known Use slice visually on desktop and mobile, including keyboard focus and reduced-motion behavior.
-- Review the richer case-study copy for accuracy and decide whether the interactive artifact should become more ambitious.
-- Add real projects to each section without forcing them through the web-development presentation or a shared project schema.
-- Review whether the category labels and empty states fit the intended practice, then develop web development independently from the other sections.
-- Test the preview-window transition in a supporting browser, a non-supporting browser, and with reduced motion enabled.
-- Visually review the new home, web-development, and PROVENANCE index pages at desktop and mobile widths; confirm the intended balance between professional clarity and the contained experimental archive.
+- Site is live. The eight-graphic visual review pass (2026-08-04) is complete: Practice relay, Trust-boundary topology, Render pipeline, and Boundary plate were all reviewed and fixed; the custody ribbon and specimen marks/archive-layer/route-trace slices were reviewed and three were removed by Montana's call rather than refined (see DECISIONS.md).
+- First Known Use is now a themed "tour" of the live firstknownuse.com site (own xerox/fluorescent theme, scoped to that page) rather than a conventional case study; still needs the night-mode toggle question resolved if Montana wants the tour to react to the live site's theme (requires a small change in the firstknownuse repo — skipped for now).
+- Add real projects to each remaining section (audio, fabrication) without forcing them through the web-development presentation or a shared project schema.
+- Repeat the Proof Sheet browser smoke test with a representative image after WASM CPU inference completes; a headless WASM run had not yet returned detections within the test window as of the last check.
+- Test the First Known Use preview-window transition in a supporting browser, a non-supporting browser, and with reduced motion enabled.

@@ -24,10 +24,7 @@ const node = (style: Record<string, string | number>, children?: SatoriNode | Sa
 const fontPath = (name: string) => resolve(process.cwd(), 'src/assets/og-fonts', name);
 
 export const GET: APIRoute = async () => {
-  const [departureMono, jetBrainsMono] = await Promise.all([
-    readFile(fontPath('DepartureMono-Regular.otf')),
-    readFile(fontPath('JetBrainsMono-Regular.ttf')),
-  ]);
+  const jetBrainsMono = await readFile(fontPath('JetBrainsMono-Regular.ttf'));
 
   const markup = node({
     width,
@@ -39,7 +36,7 @@ export const GET: APIRoute = async () => {
     padding: '100px',
     background,
     color: foreground,
-    fontFamily: 'Departure Mono',
+    fontFamily: 'JetBrains Mono',
   }, [
     node({
       display: 'flex',
@@ -51,11 +48,11 @@ export const GET: APIRoute = async () => {
       fontSize: 22,
       letterSpacing: 3,
     }, [
-      node({}, '[ MONTANA STAKE / 00 ]'),
+      node({}, '[ MONTANA STAKE ]'),
       node({ width: 54, height: 8, background: orange }),
     ]),
     node({ display: 'flex', flexDirection: 'column', gap: 22 }, [
-      node({ fontSize: 112, lineHeight: 1, letterSpacing: -3, color: cream }, 'Montana Stake'),
+      node({ fontFamily: 'JetBrains Mono', fontSize: 104, lineHeight: 1, letterSpacing: -2, color: cream }, 'Montana Stake'),
       node({ fontFamily: 'JetBrains Mono', fontSize: 27, letterSpacing: 2, color: foreground }, 'WEB DEVELOPMENT / SECURITY + SYSTEMS'),
     ]),
     node({
@@ -71,7 +68,7 @@ export const GET: APIRoute = async () => {
       letterSpacing: 2,
     }, [
       node({}, 'MONTANARS.COM'),
-      node({}, 'SELECTED WORK / PROVENANCE'),
+      node({}, 'SELECTED WORK'),
     ]),
   ]);
 
@@ -79,7 +76,6 @@ export const GET: APIRoute = async () => {
     width,
     height,
     fonts: [
-      { name: 'Departure Mono', data: departureMono, weight: 400, style: 'normal' },
       { name: 'JetBrains Mono', data: jetBrainsMono, weight: 400, style: 'normal' },
     ],
   });

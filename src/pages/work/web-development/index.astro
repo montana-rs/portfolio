@@ -31,6 +31,23 @@ import Base from '../../../layouts/Base.astro';
       <span class="project-card__arrow" aria-hidden="true">↗</span>
     </a>
 
+    <section class="render-pipeline" aria-labelledby="pipeline-title">
+      <div class="render-pipeline__intro">
+        <p class="eyebrow">Working pipeline / browser practice</p>
+        <h2 id="pipeline-title">The interface is only finished when it can hold up.</h2>
+        <p>Each project moves through a visible sequence: direction becomes behavior, behavior meets a real test, and the result stays understandable enough to maintain.</p>
+      </div>
+      <div class="render-pipeline__stage-field" data-pipeline-field>
+        <ol class="render-pipeline__stages" aria-label="Web development pipeline">
+          <li><span class="render-pipeline__node" data-pipeline-node aria-hidden="true"></span><span class="render-pipeline__index">01</span><strong>Design</strong><span>find the character</span></li>
+          <li><span class="render-pipeline__node" data-pipeline-node aria-hidden="true"></span><span class="render-pipeline__index">02</span><strong>Implement</strong><span>make it act</span></li>
+          <li><span class="render-pipeline__node" data-pipeline-node aria-hidden="true"></span><span class="render-pipeline__index">03</span><strong>Test</strong><span>meet the conditions</span></li>
+          <li><span class="render-pipeline__node" data-pipeline-node aria-hidden="true"></span><span class="render-pipeline__index">04</span><strong>Contain</strong><span>leave room to evolve</span></li>
+        </ol>
+        <span class="render-pipeline__signal" data-pipeline-signal aria-hidden="true"><span></span></span>
+      </div>
+    </section>
+
     <section class="practice" aria-labelledby="practice-title">
       <p class="eyebrow">Working principles</p>
       <h2 id="practice-title">Made for use. Built with room to investigate.</h2>
@@ -42,6 +59,88 @@ import Base from '../../../layouts/Base.astro';
     </section>
   </section>
 </Base>
+
+<script>
+  const initRenderPipeline = () => {
+    const field = document.querySelector('[data-pipeline-field]');
+    const signal = document.querySelector('[data-pipeline-signal]');
+    const nodes = [...document.querySelectorAll('[data-pipeline-node]')];
+    if (!field || !signal || nodes.length < 2) return;
+
+    const scope = window;
+    scope.__renderPipelineCleanup?.();
+
+    const duration = 7000;
+    const restartPause = 850;
+    const cycleDuration = duration + restartPause;
+    const receiverHalfWindow = 0.065;
+    let frameId;
+    let start;
+    let geometry;
+
+    const updateGeometry = () => {
+      const fieldRect = field.getBoundingClientRect();
+      geometry = nodes.map((node) => {
+        const rect = node.getBoundingClientRect();
+        return {
+          x: rect.left + rect.width / 2 - fieldRect.left,
+          y: rect.top + rect.height / 2 - fieldRect.top,
+        };
+      });
+      field.style.setProperty('--track-start-x', `${geometry[0].x}px`);
+      field.style.setProperty('--track-start-y', `${geometry[0].y}px`);
+      field.style.setProperty('--track-end-x', `${geometry.at(-1).x}px`);
+      field.style.setProperty('--track-end-y', `${geometry.at(-1).y}px`);
+    };
+
+    const update = (progress, holding = false) => {
+      if (!geometry) return;
+      const first = geometry[0];
+      const last = geometry.at(-1);
+      field.style.setProperty('--signal-x', `${first.x + (last.x - first.x) * progress}px`);
+      field.style.setProperty('--signal-y', `${first.y + (last.y - first.y) * progress}px`);
+      nodes.forEach((node, index) => {
+        const isFirst = index === 0;
+        const isLast = index === nodes.length - 1;
+        const receiverProgress = index / (nodes.length - 1);
+        const isInWindow = isFirst
+          ? progress < receiverHalfWindow * 2 + 0.015
+          : isLast
+            ? progress > 1 - receiverHalfWindow * 2 + 0.025
+            : Math.abs(progress - receiverProgress) < receiverHalfWindow;
+        node.classList.toggle('is-active', !holding && isInWindow);
+      });
+    };
+
+    const tick = (now) => {
+      if (start === undefined) start = now;
+      const elapsed = (now - start) % cycleDuration;
+      update(Math.min(elapsed / duration, 1), elapsed >= duration);
+      frameId = requestAnimationFrame(tick);
+    };
+
+    const cleanup = () => {
+      cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      nodes.forEach((node) => node.classList.remove('is-active'));
+      delete scope.__renderPipelineCleanup;
+    };
+    scope.__renderPipelineCleanup = cleanup;
+
+    const resizeObserver = new ResizeObserver(updateGeometry);
+    resizeObserver.observe(field);
+    updateGeometry();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      update(0);
+      return;
+    }
+    frameId = requestAnimationFrame(tick);
+  };
+
+  document.addEventListener('astro:page-load', initRenderPipeline);
+  initRenderPipeline();
+</script>
 
 <style>
   .section-page { max-width: 70rem; padding-top: clamp(4rem, 14vw, 11rem); }
@@ -60,6 +159,26 @@ import Base from '../../../layouts/Base.astro';
   .project-card__title { font-size: clamp(2rem, 7vw, 5rem); line-height: 0.9; }
   .project-card__description { max-width: 34rem; }
   .project-card__arrow { position: absolute; top: clamp(1.25rem, 4vw, 2.5rem); right: clamp(1.25rem, 4vw, 2.5rem); font-size: 1.5rem; }
+  .render-pipeline { display: grid; grid-template-columns: minmax(14rem, .72fr) minmax(0, 1.28fr); gap: clamp(2rem, 8vw, 8rem); max-width: 70rem; margin-top: clamp(5rem, 11vw, 9rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .render-pipeline__intro { max-width: 30rem; }
+  .render-pipeline h2 { max-width: 13ch; margin: .75rem 0 1rem; font-size: clamp(2rem, 5vw, 4rem); line-height: .95; }
+  .render-pipeline__intro > p:last-child { margin: 0; }
+  .render-pipeline__stage-field { --pipeline-signal: var(--earthsong-blue); position: relative; min-width: 0; }
+  .render-pipeline__stage-field::before { content: ''; position: absolute; z-index: 0; top: var(--track-start-y); left: var(--track-start-x); width: calc(var(--track-end-x) - var(--track-start-x)); height: 1px; background: var(--earthsong-muted); }
+  .render-pipeline__stages { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 0; padding: 1rem 0 0; list-style: none; }
+  .render-pipeline__stages li { position: relative; z-index: 2; display: grid; gap: .4rem; min-width: 0; }
+  .render-pipeline__node { position: relative; display: block; width: 1.65rem; height: 1.65rem; margin-bottom: .35rem; border: 1px solid var(--earthsong-foreground); border-radius: 50%; background: var(--earthsong-background); box-shadow: inset 0 0 0 4px var(--earthsong-background); transition: border-color 240ms ease, background-color 240ms ease, box-shadow 240ms ease; }
+  .render-pipeline__node::after { position: absolute; top: 50%; left: 50%; width: .3rem; height: .3rem; content: ''; border-radius: 50%; background: transparent; transform: translate(-50%, -50%) scale(.72); transition: background-color 240ms ease, box-shadow 240ms ease, transform 280ms cubic-bezier(.2, .8, .2, 1); }
+  .render-pipeline__node.is-active { border-color: var(--pipeline-signal); background: color-mix(in srgb, var(--pipeline-signal) 14%, var(--earthsong-background)); box-shadow: inset 0 0 0 4px var(--earthsong-background), 0 0 6px color-mix(in srgb, var(--pipeline-signal) 68%, transparent), 0 0 16px color-mix(in srgb, var(--pipeline-signal) 30%, transparent); }
+  .render-pipeline__node.is-active::after { background: color-mix(in srgb, var(--pipeline-signal) 82%, transparent); box-shadow: 0 0 3px color-mix(in srgb, var(--pipeline-signal) 72%, transparent), 0 0 9px color-mix(in srgb, var(--pipeline-signal) 42%, transparent); transform: translate(-50%, -50%) scale(1.25); }
+  .render-pipeline__signal { position: absolute; z-index: 1; top: var(--signal-y); left: var(--signal-x); width: 1.4rem; height: 1px; pointer-events: none; transform: translate(-50%, -50%); }
+  .render-pipeline__signal > span { position: absolute; top: 0; left: 50%; width: 2.4rem; height: 1px; transform: translate(-50%, -50%); background: transparent; }
+  .render-pipeline__signal > span::before, .render-pipeline__signal > span::after { position: absolute; inset: 0; content: ''; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--pipeline-signal) 58%, transparent) 22%, var(--pipeline-signal) 50%, color-mix(in srgb, var(--pipeline-signal) 58%, transparent) 78%, transparent); }
+  .render-pipeline__signal > span::before { filter: blur(1.5px) drop-shadow(0 0 7px var(--pipeline-signal)) drop-shadow(0 0 16px color-mix(in srgb, var(--pipeline-signal) 78%, transparent)); }
+  .render-pipeline__signal > span::after { opacity: .78; filter: blur(8px) drop-shadow(0 0 16px color-mix(in srgb, var(--pipeline-signal) 62%, transparent)) drop-shadow(0 0 30px color-mix(in srgb, var(--pipeline-signal) 36%, transparent)); }
+  .render-pipeline__index { color: var(--earthsong-blue); font-size: .7rem; letter-spacing: .1em; }
+  .render-pipeline__stages strong { font-size: clamp(1.05rem, 2vw, 1.6rem); font-weight: 400; line-height: .95; }
+  .render-pipeline__stages li > span:last-child { max-width: 7rem; color: var(--earthsong-muted); font-size: .8rem; }
   .practice { max-width: 52rem; margin-top: clamp(5rem, 11vw, 9rem); }
   .practice h2 { max-width: 13ch; margin-block: .75rem 2rem; font-size: clamp(2rem, 5vw, 4rem); line-height: .95; }
   .practice ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--earthsong-muted); }
@@ -68,6 +187,18 @@ import Base from '../../../layouts/Base.astro';
   .practice li span { max-width: 42rem; color: var(--earthsong-foreground); }
 
   @media (prefers-reduced-motion: reduce) {
+    .render-pipeline__signal { opacity: .75; }
+    .render-pipeline__node, .render-pipeline__node::after { transition: none; }
     .project-window__preview iframe { transition: none; }
+  }
+  @media (max-width: 42rem) {
+    .render-pipeline { display: block; }
+    .render-pipeline__stages { grid-template-columns: 1fr; gap: 1.25rem; margin-top: 2rem; padding: 0 0 0 2.5rem; }
+    .render-pipeline__stage-field::before { top: var(--track-start-y); left: var(--track-start-x); width: 1px; height: calc(var(--track-end-y) - var(--track-start-y)); }
+    .render-pipeline__signal { width: 1px; height: 1.4rem; }
+    .render-pipeline__signal > span { width: 1px; height: 2.4rem; }
+    .render-pipeline__signal > span::before, .render-pipeline__signal > span::after { background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--pipeline-signal) 58%, transparent) 22%, var(--pipeline-signal) 50%, color-mix(in srgb, var(--pipeline-signal) 58%, transparent) 78%, transparent); }
+    .render-pipeline__node { position: absolute; top: 0; left: -2.5rem; }
+    .render-pipeline__stages li { min-height: 4rem; }
   }
 </style>

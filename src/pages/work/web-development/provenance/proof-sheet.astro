@@ -84,6 +84,30 @@ import ProofSheetArtifact from '../../../../sections/web-development/ProofSheetA
       </div>
       <div class="data-boundary__copy">
         <p>The selected image is read by the browser and is not uploaded by this tool. The image treatment, dither, composition, and final PNG are produced locally.</p>
+        <figure class="boundary-plate" aria-labelledby="boundary-plate-caption">
+          <p class="boundary-plate__label">Local / remote execution</p>
+          <svg data-boundary-plate viewBox="0 0 620 250" role="img" aria-labelledby="boundary-plate-title boundary-plate-desc">
+            <title id="boundary-plate-title">Proof Sheet local and remote execution boundary</title>
+            <desc id="boundary-plate-desc">A selected image enters a browser-local pipeline through canvas and a worker before becoming a proof sheet. A conditional remote tether supplies model weights to the worker; the image remains local.</desc>
+            <rect class="boundary-plate__local" x="24" y="42" width="470" height="170" rx="12" />
+            <text class="boundary-plate__label-text" x="42" y="68">BROWSER / LOCAL</text>
+            <path class="boundary-plate__route boundary-plate__route--remote" d="M 540 32 V 82 H 300 V 140" />
+            <path class="boundary-plate__signal boundary-plate__signal--halo" d="M 70 140 H 180 H 300 H 420" pathLength="100" />
+            <path class="boundary-plate__signal boundary-plate__signal--bloom" d="M 70 140 H 180 H 300 H 420" pathLength="100" />
+            <path class="boundary-plate__signal boundary-plate__signal--core" d="M 70 140 H 180 H 300 H 420" pathLength="100" />
+            <path class="boundary-plate__remote-signal boundary-plate__remote-signal--halo" d="M 540 32 V 82 H 300 V 140" pathLength="100" />
+            <path class="boundary-plate__remote-signal boundary-plate__remote-signal--bloom" d="M 540 32 V 82 H 300 V 140" pathLength="100" />
+            <path class="boundary-plate__remote-signal boundary-plate__remote-signal--core" d="M 540 32 V 82 H 300 V 140" pathLength="100" />
+            <path class="boundary-plate__route" d="M 70 140 H 180 H 300 H 420" />
+            <g class="boundary-plate__node boundary-plate__node--input" data-boundary-node="0" transform="translate(70 140)"><circle r="15" /><circle class="boundary-plate__dot" r="3" /><text x="0" y="-27" text-anchor="middle">IMAGE</text></g>
+            <g class="boundary-plate__node" data-boundary-node="0.314" transform="translate(180 140)"><circle r="15" /><circle class="boundary-plate__dot" r="3" /><text x="0" y="-27" text-anchor="middle">CANVAS</text></g>
+            <g class="boundary-plate__node" data-boundary-node="0.657" transform="translate(300 140)"><circle r="15" /><circle class="boundary-plate__dot" r="3" /><text x="0" y="-27" text-anchor="middle">WORKER</text></g>
+            <g class="boundary-plate__node boundary-plate__node--output" data-boundary-node="1" transform="translate(420 140)"><circle r="15" /><circle class="boundary-plate__dot" r="3" /><text x="0" y="-27" text-anchor="middle">PROOF SHEET</text></g>
+            <g class="boundary-plate__remote-node" data-boundary-remote transform="translate(540 32)"><circle r="11" /><circle class="boundary-plate__dot" r="2.5" /><text x="0" y="-19" text-anchor="middle">MODEL WEIGHTS</text></g>
+            <text class="boundary-plate__remote-note" x="438" y="105" text-anchor="middle">REMOTE / FIRST USE</text>
+          </svg>
+          <figcaption id="boundary-plate-caption">The image stays inside the local boundary; a conditional remote tether supplies model weights to the Worker only.</figcaption>
+        </figure>
         <dl>
           <div><dt>Remote request</dt><dd>OWLv2 model weights download from the configured Transformers.js model source on first use.</dd></div>
           <div><dt>Local execution</dt><dd>WebGPU or WASM performs inference in a Web Worker when the browser supports it.</dd></div>
@@ -94,6 +118,75 @@ import ProofSheetArtifact from '../../../../sections/web-development/ProofSheetA
     </section>
   </article>
 </Base>
+
+<script>
+  const initBoundaryPlate = () => {
+    const plate = document.querySelector('[data-boundary-plate]');
+    const localSignals = [...document.querySelectorAll('.boundary-plate__signal')];
+    const remoteSignals = [...document.querySelectorAll('.boundary-plate__remote-signal')];
+    const nodes = [...document.querySelectorAll('[data-boundary-node]')];
+    const remoteNode = document.querySelector('[data-boundary-remote]');
+    const workerNode = nodes.find((node) => Number(node.dataset.boundaryNode) === 0.657);
+    if (!plate || localSignals.length === 0 || remoteSignals.length === 0 || nodes.length === 0 || !remoteNode) return;
+
+    const scope = window;
+    scope.__boundaryPlateCleanup?.();
+    const duration = 7000;
+    const remoteStart = 0.42;
+    const remoteEnd = 0.58;
+    let frameId;
+    let start;
+
+    const setSignalPosition = (signal, progress) => {
+      const halfLength = signal.classList.contains('boundary-plate__signal--halo') || signal.classList.contains('boundary-plate__remote-signal--halo') ? 0.04 : 0.055;
+      signal.style.strokeDashoffset = `${-(progress - halfLength) * 100}`;
+    };
+
+    const update = (progress, holding = false) => {
+      localSignals.forEach((signal) => setSignalPosition(signal, progress));
+      const remoteProgress = Math.max(0, Math.min((progress - remoteStart) / (remoteEnd - remoteStart), 1));
+      remoteSignals.forEach((signal) => {
+        setSignalPosition(signal, remoteProgress);
+        signal.style.opacity = remoteProgress <= 0 ? '0' : '';
+      });
+      nodes.forEach((node) => {
+        const target = Number(node.dataset.boundaryNode);
+        const active = target === 0
+          ? progress < 0.1
+          : target === 1
+            ? progress > 0.93
+            : Math.abs(progress - target) < 0.065;
+        node.classList.toggle('is-active', !holding && active);
+      });
+      remoteNode.classList.toggle('is-active', !holding && remoteProgress < 0.14);
+      workerNode?.classList.toggle('is-remote-active', !holding && Math.abs(progress - remoteEnd) < 0.06);
+    };
+
+    const tick = (now) => {
+      if (start === undefined) start = now;
+      update(((now - start) % duration) / duration);
+      frameId = requestAnimationFrame(tick);
+    };
+
+    const cleanup = () => {
+      cancelAnimationFrame(frameId);
+      nodes.forEach((node) => node.classList.remove('is-active'));
+      workerNode?.classList.remove('is-remote-active');
+      remoteNode.classList.remove('is-active');
+      delete scope.__boundaryPlateCleanup;
+    };
+    scope.__boundaryPlateCleanup = cleanup;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      update(0);
+      return;
+    }
+    frameId = requestAnimationFrame(tick);
+  };
+
+  document.addEventListener('astro:page-load', initBoundaryPlate);
+  initBoundaryPlate();
+</script>
 
 <script>
   const initPageTitle = () => {
@@ -168,6 +261,34 @@ import ProofSheetArtifact from '../../../../sections/web-development/ProofSheetA
   .data-boundary > div:first-child { max-width: 42rem; }
   .data-boundary__copy { max-width: 42rem; }
   .data-boundary__copy > p { margin-top: 0; }
+  .boundary-plate { margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--earthsong-muted); }
+  .boundary-plate__label { margin: 0; color: var(--earthsong-orange); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .boundary-plate svg { display: block; width: 100%; height: auto; margin-top: 1rem; overflow: visible; }
+  .boundary-plate__local { fill: color-mix(in srgb, var(--earthsong-orange) 3%, transparent); stroke: var(--earthsong-muted); stroke-width: 1; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; }
+  .boundary-plate__label-text, .boundary-plate__node text, .boundary-plate__remote-node text, .boundary-plate__remote-note { fill: var(--earthsong-foreground); font-family: var(--font-micro); font-size: 10px; letter-spacing: 1px; }
+  .boundary-plate__label-text { fill: var(--earthsong-muted); font-size: 9px; }
+  .boundary-plate__route { fill: none; stroke: var(--earthsong-muted); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .boundary-plate__route--remote { stroke-dasharray: 3 4; }
+  .boundary-plate__signal, .boundary-plate__remote-signal { fill: none; stroke-linecap: round; }
+  .boundary-plate__signal--halo { stroke: var(--earthsong-orange); stroke-width: 1; stroke-dasharray: 8 92; opacity: .92; filter: blur(1px) drop-shadow(0 0 7px var(--earthsong-orange)) drop-shadow(0 0 16px color-mix(in srgb, var(--earthsong-orange) 82%, transparent)); }
+  .boundary-plate__signal--bloom { stroke: var(--earthsong-orange); stroke-width: 1; stroke-dasharray: 11 89; opacity: .82; filter: blur(5px) drop-shadow(0 0 14px color-mix(in srgb, var(--earthsong-orange) 86%, transparent)) drop-shadow(0 0 30px color-mix(in srgb, var(--earthsong-orange) 62%, transparent)); }
+  .boundary-plate__signal--core, .boundary-plate__remote-signal--core { stroke-width: 1; stroke-dasharray: 5 95; opacity: 0; }
+  .boundary-plate__remote-signal--halo { stroke: var(--earthsong-green); stroke-width: 1; stroke-dasharray: 8 92; opacity: .9; filter: blur(1px) drop-shadow(0 0 7px var(--earthsong-green)) drop-shadow(0 0 16px color-mix(in srgb, var(--earthsong-green) 82%, transparent)); }
+  .boundary-plate__remote-signal--bloom { stroke: var(--earthsong-green); stroke-width: 1; stroke-dasharray: 11 89; opacity: .8; filter: blur(5px) drop-shadow(0 0 14px color-mix(in srgb, var(--earthsong-green) 86%, transparent)) drop-shadow(0 0 30px color-mix(in srgb, var(--earthsong-green) 62%, transparent)); }
+  .boundary-plate__node circle:first-child, .boundary-plate__remote-node circle:first-child { fill: var(--earthsong-background); stroke: var(--earthsong-foreground); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+  .boundary-plate__node--input circle:first-child { stroke: var(--earthsong-orange); }
+  .boundary-plate__node--output circle:first-child, .boundary-plate__remote-node circle:first-child { stroke: var(--earthsong-green); }
+  .boundary-plate__dot { fill: var(--earthsong-foreground); }
+  .boundary-plate__remote-node .boundary-plate__dot { fill: var(--earthsong-green); }
+  .boundary-plate__remote-note { fill: var(--earthsong-muted); font-size: 8px; }
+  .boundary-plate__node circle:first-child, .boundary-plate__node .boundary-plate__dot, .boundary-plate__remote-node circle:first-child, .boundary-plate__remote-node .boundary-plate__dot { transition: filter 220ms ease, fill 220ms ease, transform 260ms cubic-bezier(.2, .8, .2, 1); transform-box: fill-box; transform-origin: center; }
+  .boundary-plate__node.is-active circle:first-child { filter: drop-shadow(0 0 7px var(--earthsong-orange)); }
+  .boundary-plate__node.is-active .boundary-plate__dot { fill: var(--earthsong-cream); transform: scale(1.7); }
+  .boundary-plate__remote-node.is-active circle:first-child { filter: drop-shadow(0 0 7px var(--earthsong-green)); }
+  .boundary-plate__remote-node.is-active .boundary-plate__dot { fill: var(--earthsong-cream); transform: scale(1.7); }
+  .boundary-plate__node.is-remote-active circle:first-child { filter: drop-shadow(0 0 7px var(--earthsong-green)); }
+  .boundary-plate__node.is-remote-active .boundary-plate__dot { fill: var(--earthsong-green); transform: scale(1.35); }
+  .boundary-plate figcaption { margin-top: .8rem; color: var(--earthsong-muted); font-size: .85rem; }
   .data-boundary dl { margin: 2rem 0 0; }
   .data-boundary dl div { padding-block: 1rem; border-top: 1px solid currentColor; }
   .data-boundary dl div:last-child { border-bottom: 1px solid currentColor; }
@@ -182,5 +303,5 @@ import ProofSheetArtifact from '../../../../sections/web-development/ProofSheetA
     .pipeline ol { display: block; }
     .pipeline li + li { padding-left: 0; border-top: 1px solid currentColor; border-left: 0; }
   }
-  @media (prefers-reduced-motion: reduce) { .experiment__cursor { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .experiment__cursor, .boundary-plate__signal, .boundary-plate__remote-signal { animation: none; } .boundary-plate__signal--core, .boundary-plate__remote-signal--core { opacity: 0; } .boundary-plate__node circle:first-child, .boundary-plate__node .boundary-plate__dot, .boundary-plate__remote-node circle:first-child, .boundary-plate__remote-node .boundary-plate__dot { transition: none; } }
 </style>

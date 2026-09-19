@@ -4,11 +4,29 @@ import Base from '../layouts/Base.astro';
 
 <Base title="Portfolio">
   <section class="home-intro" aria-labelledby="home-title">
-    <p class="eyebrow">Portfolio / selected work</p>
-    <h1 id="home-title">Web experiences and systems that are useful, understandable, and worth returning to.</h1>
+    <p class="eyebrow">IT / systems / security / web</p>
+    <h1 id="home-title">IT systems, security, and web development.</h1>
+    <p class="home-intro__lede">I am Montana Stake, an IT professional with an operations background and hands-on work across infrastructure, security monitoring, and technical support.</p>
+    <p class="home-intro__role">Seeking junior IT systems, infrastructure, and security operations roles.</p>
+    <p class="home-intro__availability">Available for remote, hybrid, or on-site work in Richmond, Virginia.</p>
     <div class="home-intro__actions" aria-label="Primary actions">
       <a class="home-intro__cta" href="#featured-work">View work <span aria-hidden="true">→</span></a>
+      <a class="home-intro__cta" href="/resume/">Resume <span aria-hidden="true">→</span></a>
       <a class="home-intro__cta" href="/contact/">Contact <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="featured-work" id="featured-work" aria-labelledby="featured-title">
+    <div>
+      <p class="eyebrow">Selected work</p>
+      <h2 id="featured-title">IT systems and security.</h2>
+    </div>
+    <div class="featured-work__list">
+      <a href="/work/it-systems-security/">
+        <span>01 / IT infrastructure + security</span>
+        <strong>IT Systems + Security</strong>
+        <p>Proxmox, Linux and Windows systems, Wazuh monitoring, trust boundaries, and recovery work.</p>
+      </a>
     </div>
   </section>
 
@@ -17,8 +35,7 @@ import Base from '../layouts/Base.astro';
       <p class="eyebrow">Practice / one living thread</p>
       <h2 id="relay-title">Work becomes clearer through contact.</h2>
       <p>
-        Making, operating, and documenting are different motions in the same practice. Each one leaves the next
-        with something useful to work from.
+        Making, operating, and documenting are one practice. Each leaves the next with something useful to work from.
       </p>
     </div>
     <div class="practice-relay__stage-field">
@@ -43,49 +60,6 @@ import Base from '../layouts/Base.astro';
         <span>keep the history visible</span>
         </li>
       </ol>
-    </div>
-  </section>
-
-  <section class="featured-work" id="featured-work" aria-labelledby="featured-title">
-    <div>
-      <p class="eyebrow">Selected work</p>
-      <h2 id="featured-title">Clear work. Strange edges.</h2>
-    </div>
-    <div class="featured-work__list">
-      <a href="/work/web-development/">
-        <span>01 / client websites + digital experiences</span>
-        <strong>Web development</strong>
-        <p>Websites and digital experiences for people building something with its own character.</p>
-      </a>
-      <a href="/work/networking/">
-        <span>02 / security + infrastructure</span>
-        <strong>Security + Systems</strong>
-        <p>Security-minded systems work, infrastructure, and hands-on technical practice for employers and technical teams.</p>
-      </a>
-    </div>
-  </section>
-
-  <section class="evidence" aria-labelledby="evidence-title">
-    <div>
-      <p class="eyebrow">Proof surfaces</p>
-      <h2 id="evidence-title">Look closer.</h2>
-    </div>
-    <div class="evidence__list">
-      <a href="/work/web-development/first-known-use/">
-        <span>01 / active WIP</span>
-        <strong>First Known Use</strong>
-        <p>A band website and Astro-based archive system, currently being brought into its public form.</p>
-      </a>
-      <a href="/work/networking/">
-        <span>02 / systems practice</span>
-        <strong>Security + Systems</strong>
-        <p>A documented home lab, trust boundaries, resilience work, and a security practice still becoming more specific.</p>
-      </a>
-      <a href="/work/web-development/provenance/proof-sheet/">
-        <span>03 / browser-local machine</span>
-        <strong>Proof Sheet</strong>
-        <p>Local image processing, Web Worker inference, seeded composition, and a downloadable 2000px artifact.</p>
-      </a>
     </div>
   </section>
 </Base>
@@ -174,6 +148,9 @@ import Base from '../layouts/Base.astro';
   .home-intro { max-width: 66rem; padding-top: clamp(4rem, 15vw, 12rem); }
   .eyebrow { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
   h1 { max-width: 16ch; margin-block: 1rem 2rem; font-size: clamp(3rem, 6vw, 6rem); line-height: .88; letter-spacing: -.06em; }
+  .home-intro__lede { max-width: 45rem; margin: 0 0 .75rem; font-size: clamp(1.15rem, 2.6vw, 1.8rem); }
+  .home-intro__role { margin: 0 0 .25rem; color: var(--earthsong-green); font-size: .95rem; }
+  .home-intro__availability { margin: 0 0 1.5rem; color: var(--earthsong-green); font-size: .9rem; }
   .home-intro__actions { display: grid; gap: .7rem; width: max-content; }
   .home-intro__cta { display: inline-block; font-weight: 700; }
   .practice-relay { display: grid; grid-template-columns: minmax(14rem, .7fr) minmax(0, 1.3fr); gap: clamp(2rem, 8vw, 8rem); max-width: 76rem; margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }

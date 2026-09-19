@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="About" description="About Montana Stake: operations, IT systems, security practice, and web development.">
+  <article class="about-page">
+    <header class="about-page__header">
+      <p class="eyebrow">About / working profile</p>
+      <h1>I work where people and systems meet.</h1>
+      <p class="about-page__intro">I am Montana Stake, an IT professional working across operations, infrastructure, security, and web development.</p>
+      <p class="about-page__availability">Available for remote, hybrid, or on-site work in Richmond, Virginia.</p>
+    </header>
+
+    <section class="about-page__section" aria-labelledby="throughline-title">
+      <div>
+        <p class="eyebrow">Throughline</p>
+        <h2 id="throughline-title">Operate carefully. Explain clearly. Leave evidence.</h2>
+      </div>
+      <div class="about-page__copy">
+        <p>My operations background taught me to keep people moving when systems are under pressure. My infrastructure and security practice extends that habit into virtualization, networks, recovery, alert triage, and controlled testing.</p>
+        <p>I care about the difference between what a system does, what its operator thinks it does, and what can be shown.</p>
+      </div>
+    </section>
+
+    <section class="about-page__section" aria-labelledby="capabilities-title">
+      <div>
+        <p class="eyebrow">Capabilities</p>
+        <h2 id="capabilities-title">A practical technical range.</h2>
+      </div>
+      <div class="about-page__cards">
+        <article>
+          <p class="about-page__label">01 / operations</p>
+          <h3>Support people and systems</h3>
+          <p>Business technology administration, first-line troubleshooting, incident escalation, documentation, staff training, and customer-impact awareness.</p>
+        </article>
+        <article>
+          <p class="about-page__label">02 / infrastructure</p>
+          <h3>Build a system you can recover</h3>
+          <p>Proxmox virtualization, Linux and Windows guests, TrueNAS and ZFS storage, Pi-hole DNS filtering, Tailscale access, segmentation, snapshots, and layered backups.</p>
+        </article>
+        <article>
+          <p class="about-page__label">03 / security</p>
+          <h3>Make the signal useful</h3>
+          <p>Wazuh deployment, Linux alert triage, file integrity monitoring, vulnerability remediation, and narrow custom detection-rule work tested against controlled signals.</p>
+        </article>
+        <article>
+          <p class="about-page__label">04 / web</p>
+          <h3>Make the interface hold up</h3>
+          <p>Astro, TypeScript, JavaScript, browser workers, local image processing, CI security controls, deployment workflows, and accessible interaction design.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-page__section" aria-labelledby="evidence-title">
+      <div>
+        <p class="eyebrow">Current evidence</p>
+        <h2 id="evidence-title">Implemented is not the same as planned.</h2>
+      </div>
+      <div class="about-page__copy">
+        <p>Wazuh 4.14.7 is deployed on Proxmox with one enrolled Linux agent. The evidence includes FIM live-fire testing, vulnerability triage and remediation, and a custom SSH detection rule with a narrow ATT&amp;CK mapping.</p>
+        <p>Windows Server 2022 is installed as a domain-controller candidate. AD DS promotion, domain clients, Windows telemetry, Sysmon, and Atomic Red Team remain future work.</p>
+        <p><a class="about-page__cta" href="/work/it-systems-security/">Read the public IT Systems + Security record <span aria-hidden="true">→</span></a></p>
+      </div>
+    </section>
+
+    <section class="about-page__section about-page__section--last" aria-labelledby="education-title">
+      <div>
+        <p class="eyebrow">Background</p>
+        <h2 id="education-title">Still building the next layer.</h2>
+      </div>
+      <div class="about-page__copy">
+        <p>Cyber Security associate degree from Hocking College. B.S. Data Analytics at Southern New Hampshire University, expected December 2026. CompTIA Security+ exam scheduled for September 26, 2026.</p>
+        <p><a class="about-page__cta" href="/resume/">View the public resume <span aria-hidden="true">→</span></a></p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .about-page { max-width: 90rem; min-width: 0; margin-inline: auto; padding-top: clamp(3rem, 10vw, 8rem); }
+  .about-page__header { max-width: 68rem; }
+  .eyebrow { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { max-width: 12ch; margin-block: 1rem 2rem; font-size: clamp(3.5rem, 11vw, 9rem); line-height: .84; letter-spacing: -.07em; }
+  h2 { max-width: 15ch; margin-block: .75rem 1.5rem; font-size: clamp(2rem, 5vw, 4.5rem); line-height: .95; }
+  .about-page__intro { max-width: 46rem; font-size: clamp(1.25rem, 3vw, 2rem); }
+  .about-page__availability { margin-top: 1.2rem; color: var(--earthsong-green); font-size: .95rem; }
+  .about-page__section { display: grid; grid-template-columns: minmax(12rem, .8fr) minmax(0, 1fr); gap: clamp(2rem, 8vw, 8rem); align-items: start; margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .about-page__copy { max-width: 44rem; }
+  .about-page__copy p:first-child { margin-top: 0; }
+  .about-page__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 52rem; }
+  .about-page__cards article { padding: 1rem 0 1.25rem; border-top: 1px solid currentColor; }
+  .about-page__cards h3 { margin: .35rem 0 .75rem; font-size: clamp(1.3rem, 2.5vw, 2rem); font-weight: 400; line-height: 1; }
+  .about-page__cards p { margin-block: 0; }
+  .about-page__label { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
+  .about-page__cta { font-weight: 700; }
+  .about-page__section--last { margin-bottom: 3rem; }
+  @media (max-width: 42rem) {
+    .about-page__section { display: block; }
+    .about-page__copy, .about-page__cards { margin-top: 2rem; }
+    .about-page__cards { grid-template-columns: 1fr; }
+  }
+</style>

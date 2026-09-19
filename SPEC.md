@@ -14,7 +14,7 @@
 |---|---|---|---|
 | Home | `/` | Introduction and selected or featured work | Structure remains flexible during exploration |
 | Web development | `/work/web-development/` | Websites, interfaces, systems, and browser experiments | May evolve independently from other work sections |
-| Networking | `/work/networking/` | Infrastructure, protocols, and connected systems | May evolve independently from other work sections |
+| IT Systems + Security | `/work/it-systems-security/` | IT infrastructure, security monitoring, recovery, and connected systems | Former `/work/networking/` route redirects here |
 | Audio | `/work/audio/` | Sound, recording, composition, and listening projects | May evolve independently from other work sections |
 | Fabrication | `/work/fabrication/` | Objects, materials, tools, and handmade work | May evolve independently from other work sections |
 | Additional sections | `/work/<section>/` | Future disciplines or practices | Add without requiring existing sections to share a presentation model |

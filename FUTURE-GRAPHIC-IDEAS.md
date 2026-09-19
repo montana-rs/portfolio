@@ -2,7 +2,7 @@
 
 These concepts are intentionally deferred. They remain available for later development after the approved graphics plan has established a consistent visual grammar.
 
-## Security + Systems
+## IT Systems + Security
 
 - **Recovery path:** `FAILURE → DETECT → RESTORE → VERIFY → RETURN` as a one-way recovery sequence with visible checkpoints.
 - **Dependency spine:** `DEVICE → TAILSCALE → SUBNET ROUTE → SERVICE → DATA` as a sanitized access path.

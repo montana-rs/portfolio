@@ -7,11 +7,12 @@ import Base from '../../layouts/Base.astro';
     <header class="contact-page__header">
       <p class="eyebrow">Contact / open channel</p>
       <h1>Contact.</h1>
-      <p class="contact-page__intro">For client work, collaboration, employment opportunities, or a thoughtful technical conversation, use whichever channel is easiest.</p>
+      <p class="contact-page__intro">For employers, recruiters, client work, collaboration, or a thoughtful technical conversation, use whichever channel is easiest.</p>
     </header>
 
     <section class="contact-page__channels" aria-labelledby="channels-title">
       <p class="eyebrow">Available channels</p>
+      <p class="contact-page__availability">Available for remote, hybrid, or on-site work in Richmond, Virginia.</p>
       <h2 id="channels-title" class="contact-page__direct-heading">Direct line.</h2>
       <div class="contact-page__list">
         <a href="mailto:montana@montanars.com">
@@ -29,6 +30,11 @@ import Base from '../../layouts/Base.astro';
           <strong>github.com/montana-rs</strong>
           <span aria-hidden="true">↗</span>
         </a>
+        <a href="https://www.linkedin.com/in/montana-stake/" rel="external">
+          <span>LinkedIn</span>
+          <strong>linkedin.com/in/montana-stake</strong>
+          <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
   </article>
@@ -41,6 +47,7 @@ import Base from '../../layouts/Base.astro';
   h1 { max-width: 12ch; margin-block: 1rem 2rem; font-size: clamp(3.5rem, 11vw, 9rem); line-height: .84; letter-spacing: -.07em; }
   h2 { max-width: 15ch; margin-block: .75rem 2rem; font-size: clamp(2rem, 5vw, 4.5rem); line-height: .95; }
   .contact-page__intro { max-width: 43rem; font-size: clamp(1.2rem, 3vw, 2rem); }
+  .contact-page__availability { max-width: 34rem; margin: 1rem 0 0; color: var(--earthsong-green); font-size: .95rem; }
   .contact-page__channels { max-width: 70rem; margin-top: clamp(4rem, 9vw, 7rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
   .contact-page__direct-heading { max-width: none; margin-block: .75rem .35rem; font-size: clamp(1.3rem, 2.5vw, 2.1rem); line-height: 1; }
   .contact-page__list { border-top: 1px solid currentColor; }

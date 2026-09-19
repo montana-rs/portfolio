@@ -1,0 +1,118 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Resume" description="Public resume for Montana Stake, covering IT operations, infrastructure, networking, security practice, and web development.">
+  <article class="resume-page">
+    <header class="resume-page__header">
+      <p class="eyebrow">Resume / current public summary</p>
+      <h1>IT, networking, and security.</h1>
+      <p class="resume-page__intro">An IT professional with an operations foundation and hands-on work across infrastructure, Wazuh, and web development.</p>
+      <p class="resume-page__availability">Available for remote, hybrid, or on-site work in Richmond, Virginia.</p>
+      <div class="resume-page__actions">
+        <a class="resume-page__cta" href="/resume/Montana-Stake-Resume-IT-Networking-Security.pdf" download>Download resume (PDF) <span aria-hidden="true">↓</span></a>
+        <a class="resume-page__cta" href="/resume/Montana-Stake-Resume-IT-Networking-Security.docx" download>Download resume (DOCX) <span aria-hidden="true">↓</span></a>
+        <a class="resume-page__cta" href="/contact/">Contact <span aria-hidden="true">→</span></a>
+        <a class="resume-page__cta" href="https://github.com/montana-rs" rel="external">GitHub <span aria-hidden="true">↗</span></a>
+        <a class="resume-page__cta" href="https://www.linkedin.com/in/montana-stake/" rel="external">LinkedIn <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <section class="resume-page__section" aria-labelledby="summary-title">
+      <div>
+        <p class="eyebrow">Summary</p>
+        <h2 id="summary-title">Technical work with operational consequences.</h2>
+      </div>
+      <div class="resume-page__copy">
+        <p>Administer business technology, troubleshoot customer-impacting issues, and build segmented infrastructure. Work across Proxmox, Linux and Windows systems, network services, DNS filtering, remote access, storage, recovery, and security controls.</p>
+        <p>Detected and mitigated a live card-testing attack against a production ecommerce platform. Current security evidence includes Wazuh deployment, Linux alert triage, FIM, vulnerability remediation, and custom detection-rule testing.</p>
+      </div>
+    </section>
+
+    <section class="resume-page__section" aria-labelledby="experience-title">
+      <div>
+        <p class="eyebrow">Experience</p>
+        <h2 id="experience-title">What I have operated.</h2>
+      </div>
+      <div class="resume-page__timeline">
+        <article>
+          <p class="resume-page__label">January 2020 to July 2026 / Athens, Ohio</p>
+          <h3>Dirty Girl Coffee / Operations Manager</h3>
+          <p>Administered Square point-of-sale, WooCommerce ecommerce, financial platforms, and segregated operational and administrative email. Provided first-line troubleshooting for a team of 5+ during live operations, with downtime immediately affecting revenue.</p>
+          <p>Detected recurring failed $1 transactions as a card-testing attack, documented the payment integration weakness, escalated the issue, and implemented CAPTCHA-based mitigation after the vendor declined to remediate.</p>
+        </article>
+        <article>
+          <p class="resume-page__label">April 2023 to July 2024 / Independence, Ohio</p>
+          <h3>Quasar Energy Group / AP and AR Specialist</h3>
+          <p>Processed 200+ invoices monthly in internal financial systems, maintained accurate records, and resolved discrepancies through customer and vendor communication.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="resume-page__section" aria-labelledby="technical-title">
+      <div>
+        <p class="eyebrow">Technical practice</p>
+        <h2 id="technical-title">What I am building now.</h2>
+      </div>
+      <div class="resume-page__timeline">
+        <article>
+          <p class="resume-page__label">Infrastructure and systems / ongoing</p>
+          <h3>Home Lab: IT Infrastructure and Network Administration</h3>
+          <p>Operate Proxmox with Windows and Linux guests, TrueNAS and ZFS storage, Pi-hole DNS filtering, Tailscale remote access, layered backups, and an isolated Kali security-learning VM.</p>
+        </article>
+        <article>
+          <p class="resume-page__label">Security / implemented</p>
+          <h3>Wazuh SIEM Lab: Deployment and Alert Triage</h3>
+          <p>Deployed Wazuh 4.14.7 as an all-in-one manager, indexer, Filebeat, and dashboard stack on Proxmox. Enrolled one Linux agent, validated FIM live-fire alerts, triaged and remediated a vulnerability finding, and wrote a custom SSH detection rule tested in logtest and live fire.</p>
+        </article>
+        <article>
+          <p class="resume-page__label">Web / ongoing</p>
+          <h3>Secure Software Development Practice</h3>
+          <p>Use gitleaks secrets detection in pre-commit and CI workflows, pin internal dependencies to release tags, and maintain security review standards covering CSP, headers, client bundles, and bot protection.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="resume-page__section resume-page__section--last" aria-labelledby="education-title">
+      <div>
+        <p class="eyebrow">Education and certification</p>
+        <h2 id="education-title">Current learning boundary.</h2>
+      </div>
+      <div class="resume-page__education">
+        <p><strong>CompTIA Security+ (SY0-701)</strong><br />Exam scheduled September 26, 2026</p>
+        <p><strong>Southern New Hampshire University</strong><br />B.S. Data Analytics, expected December 2026</p>
+        <p><strong>Hocking College</strong><br />Associate in Technical Studies, Cyber Security, May 2022</p>
+        <p><strong>Ohio University</strong><br />Associate, Sociology, May 2022</p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .resume-page { max-width: 90rem; min-width: 0; margin-inline: auto; padding-top: clamp(3rem, 10vw, 8rem); }
+  .resume-page__header { max-width: 72rem; }
+  .eyebrow { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { max-width: 12ch; margin-block: 1rem 2rem; font-size: clamp(3.5rem, 10vw, 8rem); line-height: .84; letter-spacing: -.07em; }
+  h2 { max-width: 15ch; margin-block: .75rem 1.5rem; font-size: clamp(2rem, 5vw, 4.5rem); line-height: .95; }
+  .resume-page__intro { max-width: 48rem; font-size: clamp(1.25rem, 3vw, 2rem); }
+  .resume-page__availability { margin-top: 1.2rem; color: var(--earthsong-green); font-size: .95rem; }
+  .resume-page__actions { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; margin-top: 1.5rem; }
+  .resume-page__cta { font-weight: 700; }
+  .resume-page__section { display: grid; grid-template-columns: minmax(12rem, .8fr) minmax(0, 1fr); gap: clamp(2rem, 8vw, 8rem); align-items: start; margin-top: clamp(5rem, 12vw, 10rem); padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .resume-page__copy, .resume-page__timeline, .resume-page__education { max-width: 46rem; }
+  .resume-page__copy p:first-child, .resume-page__timeline article:first-child p:last-child { margin-top: 0; }
+  .resume-page__timeline { display: grid; gap: 0; }
+  .resume-page__timeline article { padding: 1rem 0 1.25rem; border-top: 1px solid currentColor; }
+  .resume-page__timeline article:last-child { border-bottom: 1px solid currentColor; }
+  .resume-page__timeline h3 { margin: .4rem 0 .8rem; font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 400; line-height: 1; }
+  .resume-page__timeline p { margin-block: .7rem 0; }
+  .resume-page__label { color: var(--earthsong-orange); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
+  .resume-page__education { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; }
+  .resume-page__education p { margin: 0; padding-top: .8rem; border-top: 1px solid currentColor; }
+  .resume-page__section--last { margin-bottom: 3rem; }
+  @media (max-width: 42rem) {
+    .resume-page__section { display: block; }
+    .resume-page__copy, .resume-page__timeline, .resume-page__education { margin-top: 2rem; }
+    .resume-page__education { grid-template-columns: 1fr; }
+  }
+</style>

@@ -9,19 +9,21 @@ interface Props {
   theme?: string;
 }
 
-const defaultDescription = 'Web systems, connected infrastructure, sound, and physical making. Client work, independent projects, and technical studies by Montana Stake.';
+const defaultDescription = 'IT systems, security, and web development by Montana Stake. Infrastructure, Wazuh, and browser-native work.';
 const { title, description = defaultDescription, ogTitle, ogDescription, theme } = Astro.props;
 const normalizedTitle = title.replace(/ — Portfolio$/, '');
-const documentTitle = title === 'Portfolio' ? 'Montana Stake — web systems, networks, and experiments' : `${normalizedTitle} — Montana Stake`;
+const documentTitle = title === 'Portfolio' ? 'Montana Stake | IT systems, security, and web development' : `${normalizedTitle} | Montana Stake`;
 const previewTitle = ogTitle ?? documentTitle;
 const previewDescription = ogDescription ?? description;
 const siteUrl = Astro.site ?? new URL('https://montanars.com');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
-const previewImageUrl = new URL('/og.png?v=2', siteUrl);
+const previewImageUrl = new URL('/og.png?v=3', siteUrl);
 const path = Astro.url.pathname;
 const navigation = [
+  { href: '/work/it-systems-security/', label: 'IT Systems + Security' },
   { href: '/work/web-development/', label: 'Web development' },
-  { href: '/work/networking/', label: 'Security + Systems' },
+  { href: '/about/', label: 'About' },
+  { href: '/resume/', label: 'Resume' },
   { href: '/contact/', label: 'Contact' },
 ];
 ---
@@ -42,7 +44,7 @@ const navigation = [
     <meta property="og:image" content={previewImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Montana Stake — web systems, networks, and experiments." />
+    <meta property="og:image:alt" content="Montana Stake: IT systems, security, and web development." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={previewTitle} />
     <meta name="twitter:description" content={previewDescription} />
@@ -67,10 +69,14 @@ const navigation = [
     <footer class="site-footer">
       <span>Montana Stake / {new Date().getFullYear()}</span>
       <nav aria-label="Footer navigation">
+        <a href="/work/it-systems-security/">IT Systems + Security</a>
         <a href="/work/web-development/">Web development</a>
-        <a href="/work/networking/">Security + Systems</a>
+        <a href="/about/">About</a>
+        <a href="/resume/">Resume</a>
+        <a href="/studio/">Studio</a>
         <a href="/contact/">Contact</a>
         <a href="https://github.com/montana-rs" rel="external">GitHub</a>
+        <a href="https://www.linkedin.com/in/montana-stake/" rel="external">LinkedIn</a>
       </nav>
     </footer>
   </body>

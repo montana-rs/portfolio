@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Studio" description="Studio page. Work in progress.">
+  <article class="studio-page">
+    <p class="eyebrow">Studio</p>
+    <h1>Work in progress.</h1>
+  </article>
+</Base>
+
+<style>
+  .studio-page { max-width: 90rem; min-width: 0; margin-inline: auto; padding-top: clamp(3rem, 10vw, 8rem); }
+  .eyebrow { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { max-width: 12ch; margin-block: 1rem 2rem; font-size: clamp(3.5rem, 11vw, 9rem); line-height: .84; letter-spacing: -.07em; }
+</style>

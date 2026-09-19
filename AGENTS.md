@@ -14,7 +14,7 @@ Do not load `CLAUDE.md`, `README.md`, agent guides, unrelated docs, or all sourc
 
 ## Current gate
 
-The repository is documentation-only; Astro has not been scaffolded. Do not add application files, pages, dependencies, integrations, or a visual system until Montana approves a first content/visual slice. Documentation and read-only research are allowed.
+The Astro site is live and repository-authored. For approved portfolio rework, make incremental vertical slices rather than replacing the shell. Preserve existing interactive routes, redirects, and direct-upload deployment behavior. Do not add a CMS or migrate First Known Use content into this repository.
 
 ## Product guardrails
 

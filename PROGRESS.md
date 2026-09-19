@@ -243,10 +243,44 @@ The first-pass graphics are implemented and are now being refined one at a time 
 - Experiments should remain isolated and reversible, with accessible fallbacks; server infrastructure is deferred until a concrete project requires it.
 - Codex guidance optimized for lower-capability models: centralized site-specific decision rules, selective context loading, explicit scaffold gate, compact validation matrix, and role-specific builder/reviewer deltas.
 
-## Next
+## Existing backlog
 
 - Site is live. The eight-graphic visual review pass (2026-08-04) is complete: Practice relay, Trust-boundary topology, Render pipeline, and Boundary plate were all reviewed and fixed; the custody ribbon and specimen marks/archive-layer/route-trace slices were reviewed and three were removed by Montana's call rather than refined (see DECISIONS.md).
 - First Known Use is now a themed "tour" of the live firstknownuse.com site (own xerox/fluorescent theme, scoped to that page) rather than a conventional case study; still needs the night-mode toggle question resolved if Montana wants the tour to react to the live site's theme (requires a small change in the firstknownuse repo — skipped for now).
 - Add real projects to each remaining section (audio, fabrication) without forcing them through the web-development presentation or a shared project schema.
 - Repeat the Proof Sheet browser smoke test with a representative image after WASM CPU inference completes; a headless WASM run had not yet returned detections within the test window as of the last check.
 - Test the First Known Use preview-window transition in a supporting browser, a non-supporting browser, and with reduced motion enabled.
+
+## Professional front door rework: initial slice
+
+- Added public `/about/`, `/resume/`, and `/studio/` routes without removing existing experimental routes or redirects.
+- Repositioned the homepage around IT systems, infrastructure, security practice, and web development while preserving the Practice relay and existing work surfaces.
+- Updated IT Systems + Security with the implemented Wazuh evidence boundary, the isolated Kali security-learning VM, and the Windows Server 2022 domain-controller candidate status.
+- Added the canonical IT, Networking & Security resume as a public DOCX download at `/resume/Montana-Stake-Resume-IT-Networking-Security.docx`.
+- Added remote, hybrid, and Richmond-area on-site availability to the homepage, About, Resume, and Contact surfaces.
+- Studio is intentionally a minimal work-in-progress page. Existing First Known Use and PROVENANCE URLs remain canonical.
+- Build passes with 18 static page routes. The testing preview is deployed; production release remains pending final sign-off.
+
+## Next
+
+- Browser-verify the new front door at desktop and narrow widths, including navigation, focus states, overflow, and reduced motion.
+- Run the Proof Sheet and First Known Use smoke checks after the shared navigation change.
+- Testing preview is deployed at `https://testing.montanars.pages.dev/`; production remains unchanged.
+
+## Copy and graphics pass
+
+- Shortened the homepage lead to `IT systems, security, and web development.` and replaced `technologist` with `IT professional`.
+- Removed personal VM names from public portfolio copy.
+- Restored the prior animated IT Systems + Security trust-boundary graphic after review when the simplified version's signal stopping at the router proved visually broken.
+- Moved IT Systems + Security to the first primary-navigation slot and made `/work/it-systems-security/` canonical; `/work/networking/` remains a 308 compatibility redirect.
+- Reduced the IT Systems + Security, About, Resume, Studio, and homepage copy while keeping the implemented and planned boundaries explicit.
+- Rebuilt the testing preview after the pass at `e04d5e79`.
+
+## IT job front door and Wazuh evidence roadmap
+
+- Restored the broad homepage lead `IT systems, security, and web development.` and moved the junior IT systems, infrastructure, and security operations target into its subheading.
+- Removed First Known Use and Proof Sheet from the homepage proof surfaces; web development remains available through its own navigation route but is no longer a homepage priority.
+- Moved Studio out of primary navigation and kept it in the footer as a minimal work-in-progress page.
+- Added LinkedIn to Contact, Resume, and the footer.
+- Added PDF and DOCX resume downloads. The public PDF was regenerated from the current canonical DOCX rather than copying the older PDF unchanged.
+- Added a public Wazuh evidence roadmap covering current scope, the next redacted evidence captures, and explicit boundaries.
